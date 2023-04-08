@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Connect4 {
-    public static final int WIDTH = 700;
-    public static final int HEIGHT = 500;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 700;
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -56,6 +56,9 @@ public class Connect4 {
         menuPlayer.add(ai);
 
         Connect4.setJMenuBar(menuBar);
+
+        gamePanel panel = new gamePanel();
+        Connect4.add(panel);
     }
 
 
