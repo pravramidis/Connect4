@@ -12,16 +12,29 @@ public class gamePanel extends JPanel {
     public static final int lines = 6;
     public static final int columns = 7;
 
-    ImageIcon whiteIcon = new ImageIcon("assets/white.png");
+    public static ImageIcon whiteIcon = new ImageIcon("assets/white.png");
+    public static ImageIcon yellowIcon = new ImageIcon("assets/yellow.png");
+    public static ImageIcon redIcon = new ImageIcon("assets/red.png");
+
+    void createIcons() {
+        Image whiteImage = whiteIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        whiteIcon = new ImageIcon(whiteImage);
+
+        Image yellowImage = yellowIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        yellowIcon = new ImageIcon(yellowImage);
+
+        Image redImage = redIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        redIcon = new ImageIcon(redImage);
+
+    }
 
     public gamePanel() {
         java.awt.GridLayout gridDimensions = new GridLayout(6,7);
         setLayout(gridDimensions);
 
-        this.setBackground(Color.BLUE);
+        createIcons();
 
-        Image whiteImage = whiteIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        whiteIcon = new ImageIcon(whiteImage);
+        this.setBackground(Color.BLUE);
 
         JLabel [] labelArray= new JLabel[42];
 
@@ -54,7 +67,7 @@ public class gamePanel extends JPanel {
                     placeLabel(code-48, labelArray, whiteIcon, "yellow"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
                 if (code >= 96 && code <= 102) { // for the numpad keys
-                    placeLabel(code-96, labelArray, whiteIcon, "yellow"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
+                    placeLabel(code-96, labelArray, whiteIcon, "red"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
             }
 
@@ -71,20 +84,31 @@ public class gamePanel extends JPanel {
     
 
     static void placeLabel(int pos, JLabel [] labelArray, ImageIcon updateTest, String color) {
-        ImageIcon yellowIcon = new ImageIcon("assets/"+ color +".png");
-        Image yellowImage = yellowIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        yellowIcon = new ImageIcon(yellowImage);  
+        ImageIcon icon = null;
 
-        for (int j = (pos%columns); j < lines*columns; j += columns) {
-            if (j > 34) {
-                labelArray[j].setIcon(yellowIcon);
+        switch (color) {
+            case "red": {
+                icon = redIcon;
                 break;
             }
-            if (!(updateTest.equals(labelArray[j+columns].getIcon()))) {
-                labelArray[j].setIcon(yellowIcon);
+            case "yellow": {
+                icon = yellowIcon;
                 break;
             }
         }
+
+        for (int j = (pos%columns); j < lines*columns; j += columns) {
+            if (j > 34) {
+                labelArray[j].setIcon(icon);
+                break;
+            }
+            if (!(updateTest.equals(labelArray[j+columns].getIcon()))) {
+                labelArray[j].setIcon(icon);
+                break;
+            }
+        }
+
+        FindWinner.searchConnections(labelArray, yellowIcon, redIcon);
 
     }
 
