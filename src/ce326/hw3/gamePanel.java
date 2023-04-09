@@ -2,6 +2,8 @@ package ce326.hw3;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +17,8 @@ public class gamePanel extends JPanel {
     public static ImageIcon whiteIcon = new ImageIcon("assets/white.png");
     public static ImageIcon yellowIcon = new ImageIcon("assets/yellow.png");
     public static ImageIcon redIcon = new ImageIcon("assets/red.png");
+    public static ImageIcon orangeIcon = new ImageIcon("assets/orange.png");
+    public static ImageIcon pinkIcon = new ImageIcon("assets/pink.png");
 
     void createIcons() {
         Image whiteImage = whiteIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
@@ -25,6 +29,12 @@ public class gamePanel extends JPanel {
 
         Image redImage = redIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         redIcon = new ImageIcon(redImage);
+
+        Image orangeImage = orangeIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        orangeIcon = new ImageIcon(orangeImage);
+
+        Image pinkImage = pinkIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        pinkIcon = new ImageIcon(pinkImage);
 
     }
 
@@ -49,7 +59,7 @@ public class gamePanel extends JPanel {
                 @Override
                 public void mouseClicked(MouseEvent doubleClick) {
                     if (doubleClick.getClickCount() == 2) {
-                        placeLabel(pos, labelArray, updateTest, "yellow");
+                        placeLabel(pos, labelArray, "yellow");
                     }
                 }
             });
@@ -64,10 +74,10 @@ public class gamePanel extends JPanel {
                 int code = pressed.getKeyCode(); 
 
                 if (code >= 48 && code <= 54) { 
-                    placeLabel(code-48, labelArray, whiteIcon, "yellow"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
+                    placeLabel(code-48, labelArray, "yellow"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
                 if (code >= 96 && code <= 102) { // for the numpad keys
-                    placeLabel(code-96, labelArray, whiteIcon, "red"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
+                    placeLabel(code-96, labelArray, "red"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
             }
 
@@ -83,27 +93,37 @@ public class gamePanel extends JPanel {
     }
     
 
-    static void placeLabel(int pos, JLabel [] labelArray, ImageIcon updateTest, String color) {
+    static void placeLabel(int pos, JLabel [] labelArray, String color) {
         ImageIcon icon = null;
+        ImageIcon tempIcon = null;
 
         switch (color) {
             case "red": {
                 icon = redIcon;
+                tempIcon = pinkIcon;
                 break;
             }
             case "yellow": {
                 icon = yellowIcon;
+                tempIcon = orangeIcon;
                 break;
             }
         }
 
-        for (int j = (pos%columns); j < lines*columns; j += columns) {
-            if (j > 34) {
-                labelArray[j].setIcon(icon);
-                break;
-            }
-            if (!(updateTest.equals(labelArray[j+columns].getIcon()))) {
-                labelArray[j].setIcon(icon);
+        for (int j = (pos%columns); j < lines*columns; j += columns) {            
+            if (j > 34 || !(whiteIcon.equals(labelArray[j+columns].getIcon()))) {
+
+                labelArray[j].setIcon(tempIcon);
+                int position = j;
+                ImageIcon inputIcon = icon;
+                Timer timer = new Timer(1000, new ActionListener() {
+                    public void actionPerformed(ActionEvent updateLabel) {
+                        labelArray[position].setIcon(inputIcon);
+                    }
+                });
+                timer.setRepeats(false); 
+                timer.start(); 
+
                 break;
             }
         }
