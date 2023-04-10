@@ -53,7 +53,6 @@ public class gamePanel extends JPanel {
             labelArray[i].setHorizontalAlignment(JLabel.CENTER); 
             labelArray[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
             int pos = i;
-            ImageIcon updateTest = whiteIcon;
             labelArray[i].addMouseListener(new MouseAdapter() {
 
                 @Override
@@ -77,7 +76,7 @@ public class gamePanel extends JPanel {
                     placeLabel(code-48, labelArray, "yellow"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
                 if (code >= 96 && code <= 102) { // for the numpad keys
-                    placeLabel(code-96, labelArray, "red"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
+                    placeLabel(code-96, labelArray, "red"); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
                 }
             }
 
@@ -110,7 +109,10 @@ public class gamePanel extends JPanel {
             }
         }
 
-        for (int j = (pos%columns); j < lines*columns; j += columns) {            
+        for (int j = (pos%columns); j < lines*columns; j += columns) {      
+            if (!(whiteIcon.equals(labelArray[j].getIcon()))) { // So that the top of the columns can't change colors
+                break;
+            }
             if (j > 34 || !(whiteIcon.equals(labelArray[j+columns].getIcon()))) {
 
                 labelArray[j].setIcon(tempIcon);
@@ -119,6 +121,7 @@ public class gamePanel extends JPanel {
                 Timer timer = new Timer(1000, new ActionListener() {
                     public void actionPerformed(ActionEvent updateLabel) {
                         labelArray[position].setIcon(inputIcon);
+                        FindWinner.searchConnections(labelArray, yellowIcon, redIcon);
                     }
                 });
                 timer.setRepeats(false); 
@@ -128,7 +131,6 @@ public class gamePanel extends JPanel {
             }
         }
 
-        FindWinner.searchConnections(labelArray, yellowIcon, redIcon);
 
     }
 
