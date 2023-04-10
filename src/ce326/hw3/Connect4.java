@@ -22,40 +22,9 @@ public class Connect4 {
         Connect4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Connect4.setVisible(true);
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menuNewGame = new JMenu("New Game");
-        JMenu menuPlayer = new JMenu("1st Player");
-        JMenu menuHistory = new JMenu("History");
-        JMenu menuHelp = new JMenu("Help");
+        JMenuBar gameMenu = GameMenu.createGameMenu();
 
-        menuBar.add(menuNewGame);
-        menuBar.add(menuPlayer);
-        menuBar.add(menuHistory);
-        menuBar.add(menuHelp);
-
-        JMenuItem trivial, medium, hard;
-
-        trivial = new JMenuItem("Trivial");
-        medium = new JMenuItem("Medium");
-        hard = new JMenuItem("Hard");
-
-        menuNewGame.add(trivial);
-        menuNewGame.add(medium);
-        menuNewGame.add(hard);
-
-        ButtonGroup groupPlayer = new ButtonGroup();
-
-        JRadioButtonMenuItem you, ai;
-        you = new JRadioButtonMenuItem("You");
-        ai = new JRadioButtonMenuItem("AI");
-
-        groupPlayer.add(you);
-        groupPlayer.add(ai);
-
-        menuPlayer.add(you);
-        menuPlayer.add(ai);
-
-        Connect4.setJMenuBar(menuBar);
+        Connect4.setJMenuBar(gameMenu);   
 
         gamePanel panel = new gamePanel(Connect4);
         Connect4.add(panel);
