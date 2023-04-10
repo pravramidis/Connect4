@@ -1,6 +1,10 @@
 package ce326.hw3;
 
 import javax.swing.JLabel;
+
+import java.awt.Dimension;
+import java.awt.Font;
+
 import javax.swing.*;
 
 public class FindWinner {
@@ -25,12 +29,12 @@ public class FindWinner {
                     countRed = 0;
                 }
                 if (countYellow == 4) {
-                    System.out.println("ai won");
-                    return "AI won";
+                    System.out.println("You lost!");
+                    return "You lost!";
                 }
                 else if (countRed == 4) {
-                    System.out.println("player won");
-                    return "Player won";
+                    System.out.println("You won!");
+                    return "You won!";
                 }
             } 
         }
@@ -51,12 +55,10 @@ public class FindWinner {
                     countRed = 0;
                 }
                 if (countYellow == 4) {
-                    System.out.println("AI won");
-                    return "AI won";
+                    return "You lost!";
                 }
                 else if (countRed == 4) {
-                    System.out.println("player won");
-                    return "Player won";
+                    return "You won!";
                 }
             } 
         }
@@ -78,11 +80,9 @@ public class FindWinner {
                         countRed1 = 0;
                     }
                     if (countYellow1 == 4) {
-                        System.out.println("AI won");
-                        return "AI won";
+                        return "You lost!";
                     } else if (countRed1 == 4) {
-                        System.out.println("Player won");
-                        return "Player won";
+                        return "You won!";
                     }
         
                     // Check diagonal from top right to bottom left
@@ -97,21 +97,31 @@ public class FindWinner {
                         countRed2 = 0;
                     }
                     if (countYellow2 == 4) {
-                        System.out.println("AI won");
-                        return "AI won";
+                        return "You lost!";
                     } else if (countRed2 == 4) {
-                        System.out.println("Player won");
-                        return "Player won";
+                        return "You won!";
                     }
                 }
             }
         }
 
-        return "No winner";
+        return null;
     }
 
 
-    static void createModalBox(String displayString) {
-        JOptionPane.showMessageDialog(null, "This is a modal dialog box.", "Dialog Box", JOptionPane.INFORMATION_MESSAGE);
+    static void createModalBox(String displayString, JFrame connect4) {
+
+        JDialog winnerBox = new JDialog(connect4, "Winner");
+        winnerBox.setSize(400,200);
+        JLabel label = new JLabel(displayString);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setVerticalAlignment(JLabel.CENTER);
+        Font winnerFont = new Font("Sans-serif", Font.BOLD, 30);
+        label.setFont(winnerFont);
+        winnerBox.add(label);
+
+        winnerBox.setLocationRelativeTo(connect4);
+        winnerBox.setVisible(true);
+
     }
 }

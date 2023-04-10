@@ -57,7 +57,7 @@ public class Connect4 {
 
         Connect4.setJMenuBar(menuBar);
 
-        gamePanel panel = new gamePanel();
+        gamePanel panel = new gamePanel(Connect4);
         Connect4.add(panel);
         Connect4.pack();
     }

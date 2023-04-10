@@ -39,7 +39,7 @@ public class gamePanel extends JPanel {
 
     }
 
-    public gamePanel() {
+    public gamePanel(JFrame currFrame) {
         java.awt.GridLayout gridDimensions = new GridLayout(6,7);
         setLayout(gridDimensions);
 
@@ -54,13 +54,16 @@ public class gamePanel extends JPanel {
             labelArray[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
             labelArray[i].setBackground(Color.BLUE);
             labelArray[i].setPreferredSize(new Dimension(iconSize,iconSize));
+            labelArray[i].setHorizontalAlignment(JLabel.CENTER);
+            labelArray[i].setVerticalAlignment(JLabel.CENTER);
             int pos = i;
+
             labelArray[i].addMouseListener(new MouseAdapter() {
 
                 @Override
                 public void mouseClicked(MouseEvent doubleClick) {
                     if (doubleClick.getClickCount() == 2) {
-                        placeLabel(pos, labelArray, "yellow");
+                        placeLabel(pos, labelArray, "yellow", currFrame);
                     }
                 }
             });
@@ -85,10 +88,10 @@ public class gamePanel extends JPanel {
                 int code = pressed.getKeyCode(); 
 
                 if (code >= 48 && code <= 54) { 
-                    placeLabel(code-48, labelArray, "yellow"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
+                    placeLabel(code-48, labelArray, "yellow", currFrame); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
                 if (code >= 96 && code <= 102) { // for the numpad keys
-                    placeLabel(code-96, labelArray, "red"); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
+                    placeLabel(code-96, labelArray, "red", currFrame); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
                 }
             }
 
@@ -104,7 +107,7 @@ public class gamePanel extends JPanel {
     }
     
 
-    static void placeLabel(int pos, JLabel [] labelArray, String color) {
+    static void placeLabel(int pos, JLabel [] labelArray, String color, JFrame currFrame) {
         ImageIcon icon = null;
         ImageIcon tempIcon = null;
 
@@ -133,7 +136,10 @@ public class gamePanel extends JPanel {
                 Timer timer = new Timer(1000, new ActionListener() {
                     public void actionPerformed(ActionEvent updateLabel) {
                         labelArray[position].setIcon(inputIcon);
-                        FindWinner.searchConnections(labelArray, yellowIcon, redIcon);
+                        String displayString = FindWinner.searchConnections(labelArray, yellowIcon, redIcon);
+                        if (displayString != null) {
+                            FindWinner.createModalBox(displayString, currFrame);
+                        }
                     }
                 });
                 timer.setRepeats(false); 
@@ -145,5 +151,6 @@ public class gamePanel extends JPanel {
 
 
     }
+
 
 }
