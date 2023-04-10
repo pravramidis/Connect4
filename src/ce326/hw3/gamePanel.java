@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 public class gamePanel extends JPanel {
     public static final int lines = 6;
     public static final int columns = 7;
+    private static final int iconSize = 150;
 
     public static ImageIcon whiteIcon = new ImageIcon("assets/white.png");
     public static ImageIcon yellowIcon = new ImageIcon("assets/yellow.png");
@@ -21,19 +22,19 @@ public class gamePanel extends JPanel {
     public static ImageIcon pinkIcon = new ImageIcon("assets/pink.png");
 
     void createIcons() {
-        Image whiteImage = whiteIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        Image whiteImage = whiteIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
         whiteIcon = new ImageIcon(whiteImage);
 
-        Image yellowImage = yellowIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        Image yellowImage = yellowIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
         yellowIcon = new ImageIcon(yellowImage);
 
-        Image redImage = redIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        Image redImage = redIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
         redIcon = new ImageIcon(redImage);
 
-        Image orangeImage = orangeIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        Image orangeImage = orangeIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
         orangeIcon = new ImageIcon(orangeImage);
 
-        Image pinkImage = pinkIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        Image pinkImage = pinkIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
         pinkIcon = new ImageIcon(pinkImage);
 
     }
@@ -49,9 +50,10 @@ public class gamePanel extends JPanel {
         JLabel [] labelArray= new JLabel[42];
 
         for (int i = 0; i < lines*columns; i++) {
-            labelArray[i] = new JLabel(whiteIcon);
-            labelArray[i].setHorizontalAlignment(JLabel.CENTER); 
+            labelArray[i] = new JLabel();
             labelArray[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            labelArray[i].setBackground(Color.BLUE);
+            labelArray[i].setPreferredSize(new Dimension(iconSize,iconSize));
             int pos = i;
             labelArray[i].addMouseListener(new MouseAdapter() {
 
@@ -62,8 +64,18 @@ public class gamePanel extends JPanel {
                     }
                 }
             });
+            /* Without the timer sometimes the labels appear as square and i have no idea why  */
+            Timer timer = new Timer(0  , new ActionListener() {
+                    public void actionPerformed(ActionEvent updateLabel) {
+                        for (int i = 0; i < lines*columns; i++){
+                            labelArray[i].setIcon(whiteIcon);
+                        }
+                    }
+            });
+            timer.setRepeats(false);
+            timer.start();
             
-            add(labelArray[i]);
+            this.add(labelArray[i]);
         }
 
         this.setFocusable(true);

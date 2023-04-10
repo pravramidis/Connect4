@@ -59,6 +59,7 @@ public class Connect4 {
 
         gamePanel panel = new gamePanel();
         Connect4.add(panel);
+        Connect4.pack();
     }
 
 
