@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
 
-public class gamePanel extends JPanel {
+public class GamePanel extends JPanel {
     public static final int lines = 6;
     public static final int columns = 7;
     private static final int iconSize = 150;
@@ -21,6 +21,11 @@ public class gamePanel extends JPanel {
     public static ImageIcon redIcon = new ImageIcon("assets/red.png");
     public static ImageIcon orangeIcon = new ImageIcon("assets/orange.png");
     public static ImageIcon pinkIcon = new ImageIcon("assets/pink.png");
+
+    JLabel [] labelArray= new JLabel[42];
+    char [] gameArray = new char[42]; // the array will store the game state because its easier to compare chars and not labels
+    AIPlayer aiPlayer = null;
+    JFrame currFrame = null;
 
     void createIcons() {
         Image whiteImage = whiteIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
@@ -40,7 +45,17 @@ public class gamePanel extends JPanel {
 
     }
 
-    public gamePanel(JFrame currFrame) {
+    public void resetGrid() {
+        for (int i = 0; i < lines*columns; i ++) {
+            labelArray[i].setIcon(whiteIcon);
+        }
+        Arrays.fill(gameArray, 'w');
+    }
+
+    public GamePanel(JFrame currFrame, AIPlayer newAiPlayer) {
+        this.aiPlayer = newAiPlayer;
+        this.currFrame = currFrame;
+
         java.awt.GridLayout gridDimensions = new GridLayout(6,7);
         setLayout(gridDimensions);
 
@@ -48,8 +63,7 @@ public class gamePanel extends JPanel {
 
         this.setBackground(Color.BLUE);
 
-        JLabel [] labelArray= new JLabel[42];
-        char [] gameArray = new char[42]; // the array will store the game state because its easier to compare chars and not labels
+        
         Arrays.fill(gameArray, 'w'); // designates every circle as white
 
         for (int i = 0; i < lines*columns; i++) {
@@ -66,7 +80,7 @@ public class gamePanel extends JPanel {
                 @Override
                 public void mouseClicked(MouseEvent doubleClick) {
                     if (doubleClick.getClickCount() == 2) {
-                        placeLabel(pos, labelArray, gameArray, "yellow", currFrame);
+                        placeLabel(pos, "red");
                     }
                 }
             });
@@ -84,16 +98,18 @@ public class gamePanel extends JPanel {
             this.add(labelArray[i]);
         }
 
+        aiPlayer.makeMove(this);
+
         this.setFocusable(true);
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent pressed) {
                 int code = pressed.getKeyCode(); 
                 if (code >= 48 && code <= 54) { 
-                    placeLabel(code-48, labelArray, gameArray, "red", currFrame); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
+                    placeLabel(code-48, "red"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
                 if (code >= 96 && code <= 102) { // for the numpad keys
-                    placeLabel(code-96, labelArray, gameArray, "red", currFrame); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
+                    placeLabel(code-96, "red"); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
                 }
             }
 
@@ -109,7 +125,7 @@ public class gamePanel extends JPanel {
     }
     
 
-    public static void placeLabel(int pos, JLabel [] labelArray, char [] gameArray, String color, JFrame currFrame) {
+    public void placeLabel(int pos, String color) {
         ImageIcon icon = null;
         ImageIcon tempIcon = null;
 
@@ -160,7 +176,7 @@ public class gamePanel extends JPanel {
 
         if (color == "red") {
             if (gameArray[0] != 'l'){
-                AIPlayer.makeMove(labelArray, gameArray, currFrame);
+                aiPlayer.makeMove(this);
             }
         }
 

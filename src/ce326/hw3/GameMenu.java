@@ -8,9 +8,13 @@ import javax.swing.*;
 
 public class GameMenu {
     JFrame currFrame = null;
+    GamePanel currPanel = null;
+    AIPlayer aiPlayer = null;
 
-    public GameMenu(JFrame currFrame) {
-        this.currFrame = currFrame;
+    public GameMenu(JFrame currFrame, GamePanel currPanel, AIPlayer aiPlayer) {
+        this.currFrame = currFrame; 
+        this.currPanel = currPanel;
+        this.aiPlayer = aiPlayer;
     }
 
     public JMenuBar createGameMenu() {
@@ -31,20 +35,49 @@ public class GameMenu {
         medium = new JMenuItem("Medium");
         hard = new JMenuItem("Hard");
 
-        trivial.addActionListener(new newGameListener());
-        medium.addActionListener(new newGameListener());
-        hard.addActionListener(new newGameListener());
-
         menuNewGame.add(trivial);
         menuNewGame.add(medium);
         menuNewGame.add(hard);
-
 
         ButtonGroup groupPlayer = new ButtonGroup();
 
         JRadioButtonMenuItem you, ai;
         you = new JRadioButtonMenuItem("You");
         ai = new JRadioButtonMenuItem("AI");
+
+        ai.setSelected(true);
+
+        trivial.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                currPanel.resetGrid();
+                aiPlayer.depth = 1;
+                if (ai.isSelected()) {
+                    aiPlayer.makeMove(currPanel);
+                }
+            }
+        });
+
+        medium.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                currPanel.resetGrid();
+                aiPlayer.depth = 3;
+                if (ai.isSelected()) {
+                    aiPlayer.makeMove(currPanel);
+                }
+            }
+        });
+
+        hard.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                currPanel.resetGrid();
+                aiPlayer.depth = 5;
+                if (ai.isSelected()) {
+                    aiPlayer.makeMove(currPanel);
+                }
+            }
+        });
+
+
 
         groupPlayer.add(you);
         groupPlayer.add(ai);
@@ -59,8 +92,7 @@ public class GameMenu {
     class newGameListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            JPanel newGamePanel = new gamePanel(currFrame);
-            currFrame.add(newGamePanel);
+            currPanel.resetGrid();
         }
     }
 }

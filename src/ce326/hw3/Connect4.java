@@ -22,13 +22,16 @@ public class Connect4 {
         Connect4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Connect4.setVisible(true);
 
-        GameMenu gameMenu = new GameMenu(Connect4);
+        AIPlayer aiPlayer = new AIPlayer(null, null, Connect4, 1);
+
+        GamePanel panel = new GamePanel(Connect4, aiPlayer);
+        Connect4.add(panel);
+
+        GameMenu gameMenu = new GameMenu(Connect4, panel, aiPlayer);
         JMenuBar gameMenuBar = gameMenu.createGameMenu();
 
         Connect4.setJMenuBar(gameMenuBar);   
 
-        gamePanel panel = new gamePanel(Connect4);
-        Connect4.add(panel);
         Connect4.pack();
     }
 
