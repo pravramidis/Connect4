@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.*;
 
@@ -11,16 +12,16 @@ public class FindWinner {
     public static final int rows = 6;
     public static final int columns = 7;
     
-    public static String searchConnections (JLabel [] labelArray, ImageIcon yellow, ImageIcon red) {
+    public static String searchConnections (char [] gameArray, ImageIcon yellow, ImageIcon red, ImageIcon orange, ImageIcon pink) {
        
         /* Checks for winner by row*/
         for (int i = 0;  i < rows; i++ ) {
             for (int j = 0,countRed = 0, countYellow = 0; j < columns; j++) {
-                if (yellow.equals(labelArray[i*columns+j].getIcon())) {
+                if (gameArray[i*columns+j] == 'y') {
                     countYellow++;
                     countRed = 0;
                 }
-                else if (red.equals(labelArray[i*columns + j].getIcon())) {
+                else if (gameArray[i*columns + j] == 'r') {
                     countRed++;
                     countYellow = 0;
                 }
@@ -29,11 +30,9 @@ public class FindWinner {
                     countRed = 0;
                 }
                 if (countYellow == 4) {
-                    System.out.println("You lost!");
                     return "You lost!";
                 }
                 else if (countRed == 4) {
-                    System.out.println("You won!");
                     return "You won!";
                 }
             } 
@@ -42,11 +41,11 @@ public class FindWinner {
         /* Checks for winner by column */
         for (int i = 0;  i < columns; i++ ) {
             for (int j = 0,countRed = 0, countYellow = 0; j < rows; j++) {
-                if (yellow.equals(labelArray[j*columns+i].getIcon())) {
+                if (gameArray[j*columns+i] == 'y') {
                     countYellow++;
                     countRed = 0;
                 }
-                else if (red.equals(labelArray[j*columns + i].getIcon())) {
+                else if (gameArray[j*columns + i] == 'r') {
                     countRed++;
                     countYellow = 0;
                 }
@@ -69,10 +68,10 @@ public class FindWinner {
                 int k = i - j;
                 if (k >= 0 && k < rows && j < columns) {
                     // Check diagonal from top left to bottom right
-                    if (yellow.equals(labelArray[k * columns + j].getIcon())) {
+                    if (gameArray[k * columns + j] == 'y') {
                         countYellow1++;
                         countRed1 = 0;
-                    } else if (red.equals(labelArray[k * columns + j].getIcon())) {
+                    } else if (gameArray[k * columns + j] == 'r') {
                         countRed1++;
                         countYellow1 = 0;
                     } else {
@@ -86,10 +85,10 @@ public class FindWinner {
                     }
         
                     // Check diagonal from top right to bottom left
-                    if (yellow.equals(labelArray[k * columns + columns - j - 1].getIcon())) {
+                    if (gameArray[k * columns + columns - j - 1] == 'y') {
                         countYellow2++;
                         countRed2 = 0;
-                    } else if (red.equals(labelArray[k * columns + columns - j - 1].getIcon())) {
+                    } else if (gameArray[k * columns + columns - j - 1] == 'r') {
                         countRed2++;
                         countYellow2 = 0;
                     } else {

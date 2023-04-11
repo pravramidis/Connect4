@@ -22,9 +22,10 @@ public class Connect4 {
         Connect4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Connect4.setVisible(true);
 
-        JMenuBar gameMenu = GameMenu.createGameMenu();
+        GameMenu gameMenu = new GameMenu(Connect4);
+        JMenuBar gameMenuBar = gameMenu.createGameMenu();
 
-        Connect4.setJMenuBar(gameMenu);   
+        Connect4.setJMenuBar(gameMenuBar);   
 
         gamePanel panel = new gamePanel(Connect4);
         Connect4.add(panel);
