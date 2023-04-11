@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 
 public class gamePanel extends JPanel {
@@ -49,6 +50,7 @@ public class gamePanel extends JPanel {
 
         JLabel [] labelArray= new JLabel[42];
         char [] gameArray = new char[42]; // the array will store the game state because its easier to compare chars and not labels
+        Arrays.fill(gameArray, 'w'); // designates every circle as white
 
         for (int i = 0; i < lines*columns; i++) {
             labelArray[i] = new JLabel();
@@ -65,9 +67,6 @@ public class gamePanel extends JPanel {
                 public void mouseClicked(MouseEvent doubleClick) {
                     if (doubleClick.getClickCount() == 2) {
                         placeLabel(pos, labelArray, gameArray, "yellow", currFrame);
-                        if (!findDialogWindow()) {
-                            AIPlayer.makeMove(labelArray, gameArray,currFrame);
-                        }
                     }
                 }
             });
@@ -89,21 +88,13 @@ public class gamePanel extends JPanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent pressed) {
-                // setEnabled(false);
                 int code = pressed.getKeyCode(); 
                 if (code >= 48 && code <= 54) { 
                     placeLabel(code-48, labelArray, gameArray, "red", currFrame); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
-                    if (!findDialogWindow()) {
-                        AIPlayer.makeMove(labelArray, gameArray, currFrame);
-                    }
                 }
                 if (code >= 96 && code <= 102) { // for the numpad keys
                     placeLabel(code-96, labelArray, gameArray, "red", currFrame); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
-                    if (!findDialogWindow()) {
-                        AIPlayer.makeMove(labelArray,gameArray, currFrame);
-                    }
                 }
-                // setEnabled(true);
             }
 
 
@@ -136,10 +127,10 @@ public class gamePanel extends JPanel {
         }
 
         for (int j = (pos%columns); j < lines*columns; j += columns) {      
-            if (!(whiteIcon.equals(labelArray[j].getIcon()))) { // So that the top of the columns can't change colors
+            if (gameArray[j] != 'w') { // So that the top of the columns can't change colors
                 break;
             }
-            if (j > 34 || !(whiteIcon.equals(labelArray[j+columns].getIcon()))) {
+            if ((j > 34 || gameArray[j+columns] != 'w') && gameArray[j] == 'w') {
 
                 labelArray[j].setIcon(tempIcon);
                 gameArray[j] = color.charAt(0);
@@ -147,11 +138,12 @@ public class gamePanel extends JPanel {
                 int position = j;
                 ImageIcon inputIcon = icon;
                 
-                String displayString = FindWinner.searchConnections(gameArray, yellowIcon, redIcon, orangeIcon, pinkIcon);
+                String displayString = FindWinner.searchConnections(gameArray);
                 if (displayString != null) {
                     FindWinner.createModalBox(displayString, currFrame);
+                    FindWinner.preventFurtherPlacemetns(gameArray);
                 }
-                Timer timer = new Timer(1000, new ActionListener() {
+                  Timer timer = new Timer(1000, new ActionListener() {
                     public void actionPerformed(ActionEvent updateLabel) {
                         labelArray[position].setIcon(inputIcon);
                     }
@@ -159,25 +151,19 @@ public class gamePanel extends JPanel {
                 
 
                 timer.setRepeats(false); 
-                timer.start(); 
+                timer.start();
 
                 break;
             }
         }
 
 
-    }
-    /* This checks if the player has won */
-    private  boolean findDialogWindow() {
-        Window[] windows = Window.getWindows();
-        System.out.println(windows.length);
-        if (windows.length > 1) {
-            return true;
+        if (color == "red") {
+            if (gameArray[0] != 'l'){
+                AIPlayer.makeMove(labelArray, gameArray, currFrame);
+            }
         }
-        else {
-            return false;
-        }
-    }
 
+    }
 
 }

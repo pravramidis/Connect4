@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import javax.swing.*;
 
@@ -12,7 +14,7 @@ public class FindWinner {
     public static final int rows = 6;
     public static final int columns = 7;
     
-    public static String searchConnections (char [] gameArray, ImageIcon yellow, ImageIcon red, ImageIcon orange, ImageIcon pink) {
+    public static String searchConnections (char [] gameArray) {
        
         /* Checks for winner by row*/
         for (int i = 0;  i < rows; i++ ) {
@@ -121,6 +123,9 @@ public class FindWinner {
 
         winnerBox.setLocationRelativeTo(connect4);
         winnerBox.setVisible(true);
+    }
 
+    static void preventFurtherPlacemetns(char [] gameArray) {
+        Arrays.fill(gameArray, 'l');
     }
 }
