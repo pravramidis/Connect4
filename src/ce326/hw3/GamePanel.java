@@ -54,6 +54,9 @@ public class GamePanel extends JPanel {
 
     public GamePanel(JFrame currFrame, AIPlayer newAiPlayer) {
         this.aiPlayer = newAiPlayer;
+        newAiPlayer.gameArray = gameArray;
+        newAiPlayer.labelArray = labelArray;
+        
         this.currFrame = currFrame;
 
         java.awt.GridLayout gridDimensions = new GridLayout(6,7);
@@ -129,6 +132,10 @@ public class GamePanel extends JPanel {
         ImageIcon icon = null;
         ImageIcon tempIcon = null;
 
+        if (!GamePanel.checkValidPos(gameArray, pos)) {
+            return;
+        }
+
         switch (color) {
             case "red": {
                 icon = redIcon;
@@ -142,37 +149,28 @@ public class GamePanel extends JPanel {
             }
         }
 
-        for (int j = (pos%columns); j < lines*columns; j += columns) {      
-            if (gameArray[j] != 'w') { // So that the top of the columns can't change colors
-                break;
-            }
-            if ((j > 34 || gameArray[j+columns] != 'w') && gameArray[j] == 'w') {
+        pos = findPos(gameArray, pos);
 
-                labelArray[j].setIcon(tempIcon);
-                gameArray[j] = color.charAt(0);
+        labelArray[pos].setIcon(tempIcon);
+        gameArray[pos] = color.charAt(0);
 
-                int position = j;
-                ImageIcon inputIcon = icon;
-                
-                String displayString = FindWinner.searchConnections(gameArray);
-                if (displayString != null) {
-                    FindWinner.createModalBox(displayString, currFrame);
-                    FindWinner.preventFurtherPlacemetns(gameArray);
-                }
-                  Timer timer = new Timer(1000, new ActionListener() {
-                    public void actionPerformed(ActionEvent updateLabel) {
-                        labelArray[position].setIcon(inputIcon);
-                    }
-                });
-                
-
-                timer.setRepeats(false); 
-                timer.start();
-
-                break;
-            }
+        int position = pos;
+        ImageIcon inputIcon = icon;
+        
+        String displayString = FindWinner.searchConnections(gameArray);
+        if (displayString != null) {
+            FindWinner.createModalBox(displayString, currFrame);
+            FindWinner.preventFurtherPlacemetns(gameArray);
         }
+            Timer timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent updateLabel) {
+                labelArray[position].setIcon(inputIcon);
+            }
+        });
+        
 
+        timer.setRepeats(false); 
+        timer.start();
 
         if (color == "red") {
             if (gameArray[0] != 'l'){
@@ -180,6 +178,28 @@ public class GamePanel extends JPanel {
             }
         }
 
+    }
+
+    public static boolean checkValidPos(char [] gameArray, int pos) {
+        pos = pos%columns;
+
+        if (gameArray[pos] != 'w') {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public static int findPos(char [] gameArray, int pos) {
+        for (int j = (pos%columns); j < lines*columns; j += columns) {      
+            if ((j > 34 || gameArray[j+columns] != 'w') && gameArray[j] == 'w') {
+                return j;
+           }
+        }
+
+
+        return -1; // will nener get here
     }
 
 }
