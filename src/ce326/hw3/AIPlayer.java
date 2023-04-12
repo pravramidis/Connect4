@@ -2,6 +2,7 @@ package ce326.hw3;
 
 import javax.swing.*;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class AIPlayer {
@@ -21,14 +22,19 @@ public class AIPlayer {
     }
    
     void makeMove(GamePanel gamePanel) {
-        Random rand = new Random();
+        // Random rand = new Random();
 
-        int randomNumber = rand.nextInt(7);
+        // int randomNumber = rand.nextInt(7);
 
+        BestChild child;
+
+        child = miniMax(gameArray, depth, true, -Integer.MAX_VALUE, Integer.MAX_VALUE);
+    
+        System.out.println("value: " + child.value + "pos: " + child.position);
         
-        gamePanel.placeLabel(randomNumber, "yellow"); 
+        gamePanel.placeLabel(child.position, "yellow"); 
 
-        evaluatePosition(gameArray);
+        //evaluatePosition(gameArray);
     }
 
     int evaluatePosition(char [] gameArray) {
@@ -41,7 +47,7 @@ public class AIPlayer {
             } 
         }
 
-        System.out.println("evaluation: " + evaluation);
+        //System.out.println("evaluation: " + evaluation);
         return evaluation;
     }
 
@@ -84,20 +90,104 @@ public class AIPlayer {
         else if (countYellow == 0) {
             switch (countRed) {
                 case 1: {
-                    return 1;
+                    return -1;
                 }
                 case 2: {
-                    return 4;
+                    return -4;
                 }
                 case 3: {
-                    return 16;
+                    return -16;
                 }
                 case 4: {
-                    return 1000;
+                    return -1000;
                 }
             }
         }
-        
+
         return evaluation;
+    }
+
+    class BestChild {
+        int value;
+        int position;
+
+        public BestChild(int value, int position) {
+            this.value = value;
+            this.position = position;
+        }
+    }
+
+    BestChild miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
+
+        BestChild child = new BestChild(-1, -1);
+        BestChild tempChild = new BestChild(-1, -1);
+
+        if (depth == 0) {
+            child.position = -1;
+            child.value = evaluatePosition(gameArray);
+            return child;
+        }
+
+
+
+        if (maxPlayer) {
+            int max = -Integer.MAX_VALUE;
+            for (int i = 0; i < columns; i++) {
+
+                if (!GamePanel.checkValidPos(gameArray, i)) {
+                    break;
+                }
+
+                char [] moveArray = Arrays.copyOf(gameArray, gameArray.length);
+                int pos = GamePanel.findPos(moveArray, i);
+                moveArray[pos] = 'y';
+
+                tempChild = miniMax(moveArray, depth-1, false, alpha, beta);
+
+                max = Math.max(max, tempChild.value);
+                alpha = Math.max(alpha,max);
+
+                if (max == tempChild.value) {
+                    child.position = i;
+                }
+
+                if (beta <=alpha) {
+                    break;
+                }
+            }
+
+            child.value = max;
+
+            return child;
+        }
+
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < columns; i++) {
+
+            if (!GamePanel.checkValidPos(gameArray, i)) {
+                break;
+            }
+
+            char [] moveArray = Arrays.copyOf(gameArray, gameArray.length);
+            int pos = GamePanel.findPos(moveArray, i);
+            moveArray[pos] = 'r';
+
+            tempChild = miniMax(gameArray, depth-1, true, alpha, beta);
+            min = Math.min(min, tempChild.value);
+            beta = Math.min(beta, tempChild.value);
+
+            if (min == tempChild.value) {
+                child.position = i;
+            }
+
+            if (beta <= alpha) {
+                break;
+            }
+        }
+
+        child.value = min;
+
+        return child;
+
     }
 }
