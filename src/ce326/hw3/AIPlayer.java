@@ -30,7 +30,7 @@ public class AIPlayer {
 
         child = miniMax(gameArray, depth, true, -Integer.MAX_VALUE, Integer.MAX_VALUE);
     
-        System.out.println("value: " + child.value + "pos: " + child.position);
+        // System.out.println("value: " + child.value + "pos: " + child.position);
         
         gamePanel.placeLabel(child.position, "yellow"); 
 
@@ -47,7 +47,7 @@ public class AIPlayer {
             } 
         }
 
-        //System.out.println("evaluation: " + evaluation);
+        // System.out.println("evaluation: " + evaluation);
         return evaluation;
     }
 
@@ -117,6 +117,16 @@ public class AIPlayer {
         }
     }
 
+    void pringArray(char [] gameArray) {
+        System.out.println("current state");
+        for (int i = 0;  i < rows; i++ ) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print(gameArray[i*columns+j]);
+            } 
+            System.out.println();
+        }
+    }
+
     BestChild miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
 
         BestChild child = new BestChild(-1, -1);
@@ -125,6 +135,7 @@ public class AIPlayer {
         if (depth == 0) {
             child.position = -1;
             child.value = evaluatePosition(gameArray);
+            pringArray(gameArray); 
             return child;
         }
 
@@ -151,7 +162,10 @@ public class AIPlayer {
                     child.position = i;
                 }
 
-                if (beta <=alpha) {
+                // System.out.println("beta: " + beta + "alpha: "+  alpha);
+
+                if (beta <= alpha) {
+                    // System.out.println("in" + max);
                     break;
                 }
             }
@@ -172,15 +186,16 @@ public class AIPlayer {
             int pos = GamePanel.findPos(moveArray, i);
             moveArray[pos] = 'r';
 
-            tempChild = miniMax(gameArray, depth-1, true, alpha, beta);
+            tempChild = miniMax(moveArray, depth-1, true, alpha, beta);
             min = Math.min(min, tempChild.value);
-            beta = Math.min(beta, tempChild.value);
+            beta = Math.min(beta, min);
 
             if (min == tempChild.value) {
                 child.position = i;
             }
-
-            if (beta <= alpha) {
+            // System.out.println("beta: " + beta + "alpha: "+  alpha);
+            if (beta <= alpha) {    
+                // System.out.println("in" + min);
                 break;
             }
         }
