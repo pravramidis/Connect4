@@ -87,6 +87,7 @@ public class GamePanel extends JPanel {
                     }
                 }
             });
+
             /* Without the timer sometimes the labels appear as square and i have no idea why  */
             Timer timer = new Timer(0  , new ActionListener() {
                     public void actionPerformed(ActionEvent updateLabel) {

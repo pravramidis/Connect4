@@ -39,11 +39,53 @@ public class AIPlayer {
 
     int evaluatePosition(char [] gameArray) {
         int evaluation = 0;
+        int countRed = 0;
+        int countYellow = 0;
+
+        int tempCounter= 0;
+
+
         for (int i = 0;  i < rows; i++ ) {
             for (int j = 0; j < columns-3; j++) {
-                // System.out.print(i*columns+j);
-                String four = new String(gameArray,i*columns + j,4);
-                evaluation += evaluateFour(four);
+                countRed = 0;
+                countYellow = 0; 
+
+                // String four = new String(gameArray, i*columns +j,  4);
+
+                for (int k = 0; k < 4; k++) {
+                    char curr = gameArray[i*columns + j + k];
+                    if (curr == 'y') {
+                        countYellow++;
+                    }
+                    else if (curr == 'r') {
+                        countRed++;
+                    }
+                }
+                System.out.println(tempCounter);
+                tempCounter++;
+                evaluation += evaluateFour(countRed, countYellow);
+                // evaluation += evaluateFour(four);
+            } 
+        }
+
+
+        
+        for (int i = 0;  i < columns; i++ ) {
+            for (int j = 0; j < rows-3; j++) {
+                countRed = 0;
+                countYellow = 0;
+
+                for (int k = 0; k < 4; k++) {
+                    if (gameArray[(j+k)*columns+i] == 'y') {
+                        countYellow++;
+                    }
+                    else if (gameArray[(j+k)*columns + i] == 'r') {
+                        countRed++;
+                    }
+                }
+
+                evaluation += evaluateFour(countRed, countYellow);
+         
             } 
         }
 
@@ -51,22 +93,23 @@ public class AIPlayer {
         return evaluation;
     }
 
-    int evaluateFour(String four) {
+    int evaluateFour(int countRed, int countYellow) {
+    // int evaluateFour(String four) {
         int evaluation = 0;
-        int countRed = 0;
-        int countYellow = 0;
+        // int countRed = 0;
+        // int countYellow = 0;
         
-        //System.out.println(four);
+        // System.out.println(four);
 
-        for (int i = 0; i < 4; i++) {
-            char curr = four.charAt(i);
-            if (curr == 'y') {
-                countYellow++;
-            }
-            else if (curr == 'r') {
-                countRed++;
-            }
-        }
+        // for (int i = 0; i < 4; i++) {
+        //     char curr = four.charAt(i);
+        //     if (curr == 'y') {
+        //         countYellow++;
+        //     }
+        //     else if (curr == 'r') {
+        //         countRed++;
+        //     }
+        // }
 
         if ((countRed > 0 && countYellow > 0) || (countRed == 0 && countYellow == 0)) {
             return 0;
@@ -135,7 +178,7 @@ public class AIPlayer {
         if (depth == 0) {
             child.position = -1;
             child.value = evaluatePosition(gameArray);
-            pringArray(gameArray); 
+            // pringArray(gameArray); 
             return child;
         }
 
