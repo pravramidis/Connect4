@@ -42,7 +42,6 @@ public class AIPlayer {
         int countRed = 0;
         int countYellow = 0;
 
-        int tempCounter= 0;
 
 
         for (int i = 0;  i < rows; i++ ) {
@@ -61,8 +60,6 @@ public class AIPlayer {
                         countRed++;
                     }
                 }
-                System.out.println(tempCounter);
-                tempCounter++;
                 evaluation += evaluateFour(countRed, countYellow);
                 // evaluation += evaluateFour(four);
             } 
@@ -87,6 +84,36 @@ public class AIPlayer {
                 evaluation += evaluateFour(countRed, countYellow);
          
             } 
+        }
+
+        for (int i = 0; i < rows + columns - 1; i++) {
+            for (int j = 0; j <= i; j++) {
+                int k = i - j;
+                if (k >= 0 && k < rows && j < columns-3) {
+                    countRed = 0;
+                    countYellow = 0;
+                    for (int l = 0; l < 4 && k+l < rows && j+l < columns; l++) {
+                        // Check diagonal from top left to bottom right
+                        if (gameArray[(k+l) * columns + j + l] == 'y') {
+                            countYellow++;
+                        } else if (gameArray[(k+l) * columns + j + l] == 'r') {
+                            countRed++;
+                        }
+                    }
+
+                    countRed = 0;
+                    countYellow = 0;
+
+                    for (int l = 0; l < 4 && k+l < rows && j+l < columns; l++) {
+                        // Check diagonal from top right to bottom left
+                        if (gameArray[(k+l) * columns + columns -j -l - 1] == 'y') {
+                            countYellow++;
+                        } else if (gameArray[(k+l) * columns + columns - j -l - 1] == 'r') {
+                            countRed++;
+                        }
+                    }
+                }
+            }
         }
 
         // System.out.println("evaluation: " + evaluation);
@@ -207,10 +234,10 @@ public class AIPlayer {
 
                 // System.out.println("beta: " + beta + "alpha: "+  alpha);
 
-                if (beta <= alpha) {
-                    // System.out.println("in" + max);
-                    break;
-                }
+                // if (beta <= alpha) {
+                //     // System.out.println("in" + max);
+                //     break;
+                // }
             }
 
             child.value = max;
@@ -237,10 +264,10 @@ public class AIPlayer {
                 child.position = i;
             }
             // System.out.println("beta: " + beta + "alpha: "+  alpha);
-            if (beta <= alpha) {    
-                // System.out.println("in" + min);
-                break;
-            }
+            // if (beta <= alpha) {    
+            //     // System.out.println("in" + min);
+            //     break;
+            // }
         }
 
         child.value = min;
