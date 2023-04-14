@@ -123,20 +123,6 @@ public class AIPlayer {
     int evaluateFour(int countRed, int countYellow) {
     // int evaluateFour(String four) {
         int evaluation = 0;
-        // int countRed = 0;
-        // int countYellow = 0;
-        
-        // System.out.println(four);
-
-        // for (int i = 0; i < 4; i++) {
-        //     char curr = four.charAt(i);
-        //     if (curr == 'y') {
-        //         countYellow++;
-        //     }
-        //     else if (curr == 'r') {
-        //         countRed++;
-        //     }
-        // }
 
         if ((countRed > 0 && countYellow > 0) || (countRed == 0 && countYellow == 0)) {
             return 0;
@@ -205,7 +191,6 @@ public class AIPlayer {
         if (depth == 0) {
             child.position = -1;
             child.value = evaluatePosition(gameArray);
-            // pringArray(gameArray); 
             return child;
         }
 
@@ -232,12 +217,9 @@ public class AIPlayer {
                     child.position = i;
                 }
 
-                // System.out.println("beta: " + beta + "alpha: "+  alpha);
-
-                // if (beta <= alpha) {
-                //     // System.out.println("in" + max);
-                //     break;
-                // }
+                if (beta <= alpha) {
+                    break;
+                }
             }
 
             child.value = max;
@@ -263,11 +245,10 @@ public class AIPlayer {
             if (min == tempChild.value) {
                 child.position = i;
             }
-            // System.out.println("beta: " + beta + "alpha: "+  alpha);
-            // if (beta <= alpha) {    
-            //     // System.out.println("in" + min);
-            //     break;
-            // }
+            System.out.println("beta: " + beta + "alpha: "+  alpha);
+            if (beta <= alpha) {    
+                break;
+            }
         }
 
         child.value = min;
