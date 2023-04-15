@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 
@@ -26,6 +28,9 @@ public class GamePanel extends JPanel {
     char [] gameArray = new char[42]; // the array will store the game state because its easier to compare chars and not labels
     AIPlayer aiPlayer = null;
     JFrame currFrame = null;
+
+    String gameStart = null;
+    String Difficulty = "Trivial";
 
     void createIcons() {
         Image whiteImage = whiteIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
@@ -102,6 +107,12 @@ public class GamePanel extends JPanel {
             this.add(labelArray[i]);
         }
 
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm");
+        String dateTime = currentDateTime.format(preferedFormat);
+
+        gameStart = dateTime;
+
         aiPlayer.makeMove(this);
 
         this.setFocusable(true);
@@ -162,11 +173,13 @@ public class GamePanel extends JPanel {
         if (displayString != null) {
             FindWinner.createModalBox(displayString, currFrame);
             FindWinner.preventFurtherPlacemetns(gameArray);
+            HistoryPanel.logGame(this);            
         }
-            Timer timer = new Timer(1000, new ActionListener() {
-            public void actionPerformed(ActionEvent updateLabel) {
-                labelArray[position].setIcon(inputIcon);
-            }
+
+        Timer timer = new Timer(1000, new ActionListener() {
+        public void actionPerformed(ActionEvent updateLabel) {
+            labelArray[position].setIcon(inputIcon);
+        }
         });
         
 

@@ -16,6 +16,9 @@ public class Connect4 {
     }
 
     public static void startConnecting() {
+
+        HistoryPanel.createHistoryDirectory();
+
         JFrame Connect4 = new JFrame();
         Connect4.setSize(WIDTH, HEIGHT);
         Connect4.setTitle("Connect4");
@@ -30,7 +33,7 @@ public class Connect4 {
         mainPanel.setLayout(layout);
 
         GamePanel gamePanel = new GamePanel(Connect4, aiPlayer);
-        HistoryPanel historyPanel = new HistoryPanel();
+        HistoryPanel historyPanel = new HistoryPanel(gamePanel);
 
         mainPanel.add(gamePanel, "game");
         mainPanel.add(historyPanel, "history");
@@ -39,7 +42,7 @@ public class Connect4 {
 
         Connect4.add(mainPanel);
 
-        GameMenu gameMenu = new GameMenu(Connect4, gamePanel, aiPlayer, mainPanel);
+        GameMenu gameMenu = new GameMenu(Connect4, gamePanel, aiPlayer, mainPanel, historyPanel);
         JMenuBar gameMenuBar = gameMenu.createGameMenu();
 
         Connect4.setJMenuBar(gameMenuBar);   

@@ -7,22 +7,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 
 public class GameMenu {
     JFrame currFrame = null;
     GamePanel gamePanel = null;
+    HistoryPanel historyPanel = null;
     AIPlayer aiPlayer = null;
     JPanel mainPanel = null;
 
-    public GameMenu(JFrame currFrame, GamePanel gamePanel, AIPlayer aiPlayer, JPanel mainPanel) {
+    public GameMenu(JFrame currFrame, GamePanel gamePanel, AIPlayer aiPlayer, JPanel mainPanel, HistoryPanel historyPanel) {
         this.currFrame = currFrame; 
         this.gamePanel = gamePanel;
         this.aiPlayer = aiPlayer;
         this.mainPanel = mainPanel;
+        this.historyPanel = historyPanel;
     }
 
     public JMenuBar createGameMenu() {
@@ -57,9 +60,15 @@ public class GameMenu {
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
 
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm");
+        String DateTime = currentDateTime.format(preferedFormat);
+
 
         trivial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                gamePanel.Difficulty = "Trivial";
+                gamePanel.gameStart = DateTime;
                 cardLayout.show(mainPanel, "game");
                 gamePanel.resetGrid();
                 aiPlayer.depth = 1;
@@ -71,6 +80,9 @@ public class GameMenu {
 
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                gamePanel.Difficulty = "Medium";
+                gamePanel.gameStart = DateTime;
+
                 cardLayout.show(mainPanel, "game");
                 gamePanel.resetGrid();
                 aiPlayer.depth = 3;
@@ -82,6 +94,9 @@ public class GameMenu {
 
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                gamePanel.Difficulty = "Hard";
+                gamePanel.gameStart = DateTime;
+
                 cardLayout.show(mainPanel, "game");
                 gamePanel.resetGrid();
                 aiPlayer.depth = 5;
@@ -94,6 +109,7 @@ public class GameMenu {
         menuHistory.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                historyPanel.listFiles(gamePanel);
                 cardLayout.next(mainPanel);
             }
 
