@@ -24,10 +24,22 @@ public class Connect4 {
 
         AIPlayer aiPlayer = new AIPlayer(null, null, Connect4, 1);
 
-        GamePanel panel = new GamePanel(Connect4, aiPlayer);
-        Connect4.add(panel);
 
-        GameMenu gameMenu = new GameMenu(Connect4, panel, aiPlayer);
+        JPanel mainPanel = new JPanel();
+        CardLayout layout = new CardLayout();
+        mainPanel.setLayout(layout);
+
+        GamePanel gamePanel = new GamePanel(Connect4, aiPlayer);
+        HistoryPanel historyPanel = new HistoryPanel();
+
+        mainPanel.add(gamePanel, "game");
+        mainPanel.add(historyPanel, "history");
+
+        layout.show(mainPanel, "game"); 
+
+        Connect4.add(mainPanel);
+
+        GameMenu gameMenu = new GameMenu(Connect4, gamePanel, aiPlayer, mainPanel);
         JMenuBar gameMenuBar = gameMenu.createGameMenu();
 
         Connect4.setJMenuBar(gameMenuBar);   

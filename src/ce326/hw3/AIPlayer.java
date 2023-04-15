@@ -245,7 +245,7 @@ public class AIPlayer {
             if (min == tempChild.value) {
                 child.position = i;
             }
-            System.out.println("beta: " + beta + "alpha: "+  alpha);
+            
             if (beta <= alpha) {    
                 break;
             }

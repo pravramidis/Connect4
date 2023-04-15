@@ -1,20 +1,24 @@
 package ce326.hw3;
 
-import java.awt.MenuItem;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+
+
 public class GameMenu {
     JFrame currFrame = null;
-    GamePanel currPanel = null;
+    GamePanel gamePanel = null;
     AIPlayer aiPlayer = null;
+    JPanel mainPanel = null;
 
-    public GameMenu(JFrame currFrame, GamePanel currPanel, AIPlayer aiPlayer) {
+    public GameMenu(JFrame currFrame, GamePanel gamePanel, AIPlayer aiPlayer, JPanel mainPanel) {
         this.currFrame = currFrame; 
-        this.currPanel = currPanel;
+        this.gamePanel = gamePanel;
         this.aiPlayer = aiPlayer;
+        this.mainPanel = mainPanel;
     }
 
     public JMenuBar createGameMenu() {
@@ -47,33 +51,45 @@ public class GameMenu {
 
         ai.setSelected(true);
 
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+
+
         trivial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currPanel.resetGrid();
+                cardLayout.show(mainPanel, "game");
+                gamePanel.resetGrid();
                 aiPlayer.depth = 1;
                 if (ai.isSelected()) {
-                    aiPlayer.makeMove(currPanel);
+                    aiPlayer.makeMove(gamePanel);
                 }
             }
         });
 
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currPanel.resetGrid();
+                cardLayout.show(mainPanel, "game");
+                gamePanel.resetGrid();
                 aiPlayer.depth = 3;
                 if (ai.isSelected()) {
-                    aiPlayer.makeMove(currPanel);
+                    aiPlayer.makeMove(gamePanel);
                 }
             }
         });
 
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currPanel.resetGrid();
+                cardLayout.show(mainPanel, "game");
+                gamePanel.resetGrid();
                 aiPlayer.depth = 5;
                 if (ai.isSelected()) {
-                    aiPlayer.makeMove(currPanel);
+                    aiPlayer.makeMove(gamePanel);
                 }
+            }
+        });
+
+        menuHistory.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "history");
             }
         });
 
@@ -92,7 +108,7 @@ public class GameMenu {
     class newGameListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            currPanel.resetGrid();
+            gamePanel.resetGrid();
         }
     }
 }
