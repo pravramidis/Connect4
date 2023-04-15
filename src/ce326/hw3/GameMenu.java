@@ -3,8 +3,12 @@ package ce326.hw3;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 
 
@@ -87,10 +91,24 @@ public class GameMenu {
             }
         });
 
-        menuHistory.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel, "history");
+        menuHistory.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cardLayout.next(mainPanel);
             }
+
+            /* Included to satisfy mouselistener requirements */
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
         });
 
 
