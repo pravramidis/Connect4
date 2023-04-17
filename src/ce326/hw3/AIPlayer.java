@@ -31,6 +31,8 @@ public class AIPlayer {
         child = miniMax(gameArray, depth, true, -Integer.MAX_VALUE, Integer.MAX_VALUE);
     
         // System.out.println("value: " + child.value + "pos: " + child.position);
+
+        System.out.println(child.position + "value "+ child.value);
         
         gamePanel.placeLabel(child.position, "yellow"); 
 
@@ -86,33 +88,36 @@ public class AIPlayer {
             } 
         }
 
-        for (int i = 0; i < rows + columns - 1; i++) {
-            for (int j = 0; j <= i; j++) {
-                int k = i - j;
-                if (k >= 0 && k < rows && j < columns-3) {
-                    countRed = 0;
-                    countYellow = 0;
-                    for (int l = 0; l < 4 && k+l < rows && j+l < columns; l++) {
-                        // Check diagonal from top left to bottom right
-                        if (gameArray[(k+l) * columns + j + l] == 'y') {
-                            countYellow++;
-                        } else if (gameArray[(k+l) * columns + j + l] == 'r') {
-                            countRed++;
-                        }
+        for (int i = 0; i < rows-3; i++) {
+            for (int j = 0; j < columns - 3; j++) {
+                countRed = 0;
+                countYellow = 0;
+                for (int k = 0; k < 4; k++) {
+                    if (gameArray[(i+k)*columns + j +k] == 'y') {
+                        countYellow++;
                     }
-
-                    countRed = 0;
-                    countYellow = 0;
-
-                    for (int l = 0; l < 4 && k+l < rows && j+l < columns; l++) {
-                        // Check diagonal from top right to bottom left
-                        if (gameArray[(k+l) * columns + columns -j -l - 1] == 'y') {
-                            countYellow++;
-                        } else if (gameArray[(k+l) * columns + columns - j -l - 1] == 'r') {
-                            countRed++;
-                        }
+                    else if (gameArray[(i+k)*columns + j + k] == 'r') {
+                        countRed++;
                     }
                 }
+                evaluation += evaluateFour(countRed, countYellow);
+            }
+        }
+
+
+        for (int i = rows -3; i < rows; i++) {
+            for (int j = columns -4 ; j < columns; j++) {
+                countRed = 0;
+                countYellow = 0;
+                for (int k = 0; k < 4; k++) {
+                    if (gameArray[(i-k)*columns + j +k] == 'y') {
+                        countYellow++;
+                    }
+                    else if (gameArray[(i-k)*columns + j + k] == 'r') {
+                        countRed++;
+                    }
+                }
+                evaluation += evaluateFour(countRed, countYellow);
             }
         }
 
