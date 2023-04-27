@@ -22,19 +22,26 @@ public class AIPlayer {
     }
    
     void makeMove(GamePanel gamePanel) {
-        // Random rand = new Random();
 
-        // int randomNumber = rand.nextInt(7);
+        int position = 0, max = -Integer.MAX_VALUE, value;
+        for (int i = 0; i < columns; i++) {
 
-        BestChild child;
+            if (!GamePanel.checkValidPos(gameArray, i)) {
+                continue;
+            }
 
-        child = miniMax(gameArray, depth, true, -Integer.MAX_VALUE, Integer.MAX_VALUE);
-    
-        // System.out.println("value: " + child.value + "pos: " + child.position);
+            char [] moveArray = Arrays.copyOf(gameArray, gameArray.length);
+            int pos = GamePanel.findPos(moveArray, i);
+            moveArray[pos] = 'y';
 
-        System.out.println(child.position + "value "+ child.value);
+            value = miniMax(moveArray, depth, false, -Integer.MAX_VALUE, Integer.MAX_VALUE);
+            if (value > max) {
+                position = i;
+                max = value;
+            }
+        }
         
-        gamePanel.placeLabel(child.position, "yellow"); 
+        gamePanel.placeLabel(position, "yellow"); 
 
         //evaluatePosition(gameArray);
     }
@@ -188,48 +195,44 @@ public class AIPlayer {
         }
     }
 
-    BestChild miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
+    int miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
+        String winner = FindWinner.searchConnections(gameArray);
 
-        BestChild child = new BestChild(-1, -1);
-        BestChild tempChild = new BestChild(-1, -1);
-
-        if (depth == 0) {
-            child.position = -1;
-            child.value = evaluatePosition(gameArray);
-            return child;
+        if(winner == "You won!") {
+            return -1000;
+        }
+        if(winner == "You lost!") {
+            return 1000;
         }
 
+        if (depth == 0) {
+            return evaluatePosition(gameArray);
+        }
 
-
+        int value;
         if (maxPlayer) {
             int max = -Integer.MAX_VALUE;
             for (int i = 0; i < columns; i++) {
 
                 if (!GamePanel.checkValidPos(gameArray, i)) {
-                    break;
+                    continue;
                 }
 
                 char [] moveArray = Arrays.copyOf(gameArray, gameArray.length);
                 int pos = GamePanel.findPos(moveArray, i);
                 moveArray[pos] = 'y';
 
-                tempChild = miniMax(moveArray, depth-1, false, alpha, beta);
+                value = miniMax(moveArray, depth-1, false, alpha, beta);
 
-                max = Math.max(max, tempChild.value);
+                max = Math.max(max, value);
                 alpha = Math.max(alpha,max);
-
-                if (max == tempChild.value) {
-                    child.position = i;
-                }
 
                 if (beta <= alpha) {
                     break;
                 }
             }
 
-            child.value = max;
-
-            return child;
+            return max;
         }
 
         int min = Integer.MAX_VALUE;
@@ -243,22 +246,16 @@ public class AIPlayer {
             int pos = GamePanel.findPos(moveArray, i);
             moveArray[pos] = 'r';
 
-            tempChild = miniMax(moveArray, depth-1, true, alpha, beta);
-            min = Math.min(min, tempChild.value);
+            value = miniMax(moveArray, depth-1, true, alpha, beta);
+            min = Math.min(min, value);
             beta = Math.min(beta, min);
 
-            if (min == tempChild.value) {
-                child.position = i;
-            }
-            
             if (beta <= alpha) {    
                 break;
             }
         }
 
-        child.value = min;
-
-        return child;
+        return min;
 
     }
 }
