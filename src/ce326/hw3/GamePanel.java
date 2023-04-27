@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -109,7 +108,7 @@ public class GamePanel extends JPanel {
         }
 
         LocalDateTime currentDateTime = LocalDateTime.now();
-        DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm");
+        DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm:ss");
         String dateTime = currentDateTime.format(preferedFormat);
 
         gameStart = dateTime;
