@@ -120,6 +120,7 @@ public class GamePanel extends JPanel {
         aiPlayer.makeMove(this);
 
         this.setFocusable(true);
+        this.requestFocusInWindow(true);
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent pressed) {

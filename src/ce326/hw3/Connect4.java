@@ -39,6 +39,9 @@ public class Connect4 {
         mainPanel.add(historyPanel, "history");
 
         layout.show(mainPanel, "game"); 
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow();
+        gamePanel.requestFocus();
 
         Connect4.add(mainPanel);
 

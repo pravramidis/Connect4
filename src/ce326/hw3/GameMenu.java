@@ -126,6 +126,7 @@ public class GameMenu {
             public void mouseClicked(MouseEvent e) {
                 historyPanel.listFiles(gamePanel);
                 cardLayout.next(mainPanel);
+                gamePanel.requestFocus();
             }
 
             /* Included to satisfy mouselistener requirements */
