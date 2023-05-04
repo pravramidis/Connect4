@@ -15,6 +15,17 @@ public class FindWinner {
     public static final int columns = 7;
     
     public static String searchConnections (char [] gameArray) {
+
+        /*Checks for draws */
+        int countWhite = 0;
+        for (int i = 0; i < rows*columns; i++) {
+            if (gameArray[i] == 'w') {
+                countWhite++;
+            }
+        }
+        if (countWhite == 0) {
+            return "Draw!";
+        }
        
         /* Checks for winner by row*/
         for (int i = 0;  i < rows; i++ ) {

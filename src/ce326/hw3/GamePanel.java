@@ -10,7 +10,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class GamePanel extends JPanel {
@@ -31,6 +33,8 @@ public class GamePanel extends JPanel {
 
     String gameStart = null;
     String Difficulty = "Trivial";
+    String startingPlayer = "ai";
+    List<Integer> moveList = new ArrayList<Integer>();
 
     void createIcons() {
         Image whiteImage = whiteIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
@@ -160,6 +164,8 @@ public class GamePanel extends JPanel {
             }
         }
 
+        moveList.add(pos%columns);
+
         pos = findPos(gameArray, pos);
 
         labelArray[pos].setIcon(tempIcon);
@@ -172,7 +178,7 @@ public class GamePanel extends JPanel {
         if (displayString != null) {
             FindWinner.createModalBox(displayString, currFrame);
             FindWinner.preventFurtherPlacemetns(gameArray);
-            HistoryPanel.logGame(this);            
+            HistoryPanel.logGame(this, displayString, moveList);            
         }
 
         Timer timer = new Timer(1000, new ActionListener() {

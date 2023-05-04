@@ -71,9 +71,14 @@ public class GameMenu {
                 gamePanel.gameStart = DateTime;
                 cardLayout.show(mainPanel, "game");
                 gamePanel.resetGrid();
+                gamePanel.moveList.clear();
                 aiPlayer.depth = 1;
                 if (ai.isSelected()) {
+                    gamePanel.startingPlayer = "ai";
                     aiPlayer.makeMove(gamePanel);
+                }
+                else {
+                    gamePanel.startingPlayer = "you";
                 }
             }
         });
@@ -85,9 +90,14 @@ public class GameMenu {
 
                 cardLayout.show(mainPanel, "game");
                 gamePanel.resetGrid();
+                gamePanel.moveList.clear();
                 aiPlayer.depth = 3;
                 if (ai.isSelected()) {
+                    gamePanel.startingPlayer = "ai";
                     aiPlayer.makeMove(gamePanel);
+                }
+                else {
+                    gamePanel.startingPlayer = "you";
                 }
             }
         });
@@ -99,9 +109,14 @@ public class GameMenu {
 
                 cardLayout.show(mainPanel, "game");
                 gamePanel.resetGrid();
+                gamePanel.moveList.clear();
                 aiPlayer.depth = 5;
                 if (ai.isSelected()) {
+                    gamePanel.startingPlayer = "ai";
                     aiPlayer.makeMove(gamePanel);
+                }
+                else {
+                    gamePanel.startingPlayer = "you";
                 }
             }
         });

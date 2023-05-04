@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import org.json.*;
+import java.util.List;
+import java.util.Scanner;
 
 public class HistoryPanel extends JPanel {
 
@@ -22,17 +24,37 @@ public class HistoryPanel extends JPanel {
         if (loggedGames == null) {
             return;
         }
-        DefaultListModel<String> fileNames = new DefaultListModel<>();
+        DefaultListModel<String> gamesList = new DefaultListModel<>();
 
         for (File curr: loggedGames) {
-            fileNames.addElement(curr.getName());
+            String labelString = readGameFile(curr);
+            gamesList.addElement(labelString);
         }
 
-        JList<String> labelList = new JList<String>(fileNames);
+        JList<String> labelList = new JList<String>(gamesList);
         JScrollPane scrollPane = new JScrollPane(labelList);
         this.add(scrollPane, BorderLayout.CENTER);
 
 
+    }
+
+    
+
+    private static String readGameFile(File gameFile) {
+        StringBuilder jsonString = new StringBuilder();
+
+        try {
+            Scanner  fileReader = new Scanner(gameFile);
+            while (fileReader.hasNextLine()) {
+                jsonString.append(fileReader.nextLine());
+            }
+            fileReader.close();
+        }
+        catch (Exception e) {
+            System.out.println("Could not read file");
+        }
+
+        return jsonString.toString();
     }
 
     public static void createHistoryDirectory() {
@@ -45,7 +67,7 @@ public class HistoryPanel extends JPanel {
         }
     }
 
-    public static void logGame(GamePanel gamePanel) {
+    public static void logGame(GamePanel gamePanel, String displayString, List<Integer> moveList) {
         File gameFile = null;
         
         gameFile = createFileDescriptor(System.getProperty("user.home")+ "/Connect4/" + gamePanel.gameStart + ".json");
@@ -57,8 +79,10 @@ public class HistoryPanel extends JPanel {
             System.out.println("Failed to create file");
         }
 
+        String jsonString = createJsonString(gamePanel, displayString, moveList);
+
         try (PrintWriter writer = new PrintWriter(gameFile)) {
-            writer.format("%s", gamePanel.gameStart  + gamePanel.Difficulty);
+            writer.format("%s", jsonString);
         }
         catch (Exception ex) {
             System.out.println("Failed to write file");
@@ -77,6 +101,31 @@ public class HistoryPanel extends JPanel {
             System.out.println("Failed to create file");
         }
         return file;
+    }
+
+    private static String createJsonString(GamePanel gamePanel, String displayString, List<Integer> moveList) {
+        JSONObject gameObject = new JSONObject();
+        JSONArray moveArray = new JSONArray(moveList);
+
+        gameObject.put("startTime", gamePanel.gameStart);
+        gameObject.put("difficulty", gamePanel.Difficulty);
+        gameObject.put("startingPlayer", gamePanel.startingPlayer);
+        gameObject.put("moves", moveArray);
+
+        if (displayString == "You won!") {
+            gameObject.put("winner", "P");
+        }
+        else if (displayString == "You lost!") {
+            gameObject.put("winner", "AI");
+        }
+        else {
+            gameObject.put("winner", "D");
+        }
+
+
+
+
+        return gameObject.toString();
     }
     
 }
