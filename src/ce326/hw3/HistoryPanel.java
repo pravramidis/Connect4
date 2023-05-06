@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import org.json.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,15 +30,23 @@ public class HistoryPanel extends JPanel {
         if (loggedGames == null) {
             return;
         }
-        DefaultListModel<String> gamesList = new DefaultListModel<>();
+        // DefaultListModel<String> gamesList = new DefaultListModel<>();
+        ArrayList<String> gamesList = new ArrayList<String>();
 
         for (File curr: loggedGames) {
             String jsonString = readGameFile(curr);
             String labelString = createHistoryLabel(jsonString);
-            gamesList.addElement(labelString);
+            gamesList.add(labelString);
         }
 
-        JList<String> labelList = new JList<String>(gamesList);
+        Collections.sort(gamesList, Collections.reverseOrder());
+        DefaultListModel<String> defaultList = new DefaultListModel<String>();
+
+        for(String game: gamesList) {
+            defaultList.addElement(game);
+        }
+
+        JList<String> labelList = new JList<String>(defaultList);
         scrollPane.setViewportView(labelList);
         this.revalidate();
         this.repaint();
