@@ -40,7 +40,6 @@ public class Connect4 {
 
         layout.show(mainPanel, "game"); 
         gamePanel.setFocusable(true);
-        gamePanel.requestFocusInWindow();
         gamePanel.requestFocus();
 
         Connect4.add(mainPanel);

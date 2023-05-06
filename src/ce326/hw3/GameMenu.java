@@ -60,16 +60,18 @@ public class GameMenu {
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
 
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm");
-        String DateTime = currentDateTime.format(preferedFormat);
+        DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm:ss");
+        
 
 
         trivial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gamePanel.Difficulty = "Trivial";
-                gamePanel.gameStart = DateTime;
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                gamePanel.gameStart = currentDateTime.format(preferedFormat);
                 cardLayout.show(mainPanel, "game");
+                gamePanel.requestFocus();
+
                 gamePanel.resetGrid();
                 gamePanel.moveList.clear();
                 aiPlayer.depth = 1;
@@ -86,9 +88,11 @@ public class GameMenu {
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gamePanel.Difficulty = "Medium";
-                gamePanel.gameStart = DateTime;
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                gamePanel.gameStart = currentDateTime.format(preferedFormat);
 
                 cardLayout.show(mainPanel, "game");
+                gamePanel.requestFocus();
                 gamePanel.resetGrid();
                 gamePanel.moveList.clear();
                 aiPlayer.depth = 3;
@@ -105,9 +109,11 @@ public class GameMenu {
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gamePanel.Difficulty = "Hard";
-                gamePanel.gameStart = DateTime;
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                gamePanel.gameStart = currentDateTime.format(preferedFormat);
 
                 cardLayout.show(mainPanel, "game");
+                gamePanel.requestFocus();
                 gamePanel.resetGrid();
                 gamePanel.moveList.clear();
                 aiPlayer.depth = 5;
@@ -124,8 +130,8 @@ public class GameMenu {
         menuHistory.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                historyPanel.listFiles(gamePanel);
                 cardLayout.next(mainPanel);
+                historyPanel.listFiles(gamePanel);
                 gamePanel.requestFocus();
             }
 

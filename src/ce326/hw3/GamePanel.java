@@ -177,9 +177,9 @@ public class GamePanel extends JPanel {
         
         String displayString = FindWinner.searchConnections(gameArray);
         if (displayString != null) {
+            HistoryPanel.logGame(this, displayString, moveList);            
             FindWinner.createModalBox(displayString, currFrame);
             FindWinner.preventFurtherPlacemetns(gameArray);
-            HistoryPanel.logGame(this, displayString, moveList);            
         }
 
         Timer timer = new Timer(1000, new ActionListener() {

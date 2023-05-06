@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class HistoryPanel extends JPanel {
+    JScrollPane scrollPane = new JScrollPane();
 
     public HistoryPanel(GamePanel gamePanel) {
         setLayout(new BorderLayout());
@@ -27,18 +28,32 @@ public class HistoryPanel extends JPanel {
         DefaultListModel<String> gamesList = new DefaultListModel<>();
 
         for (File curr: loggedGames) {
-            String labelString = readGameFile(curr);
+            String jsonString = readGameFile(curr);
+            String labelString = createHistoryLabel(jsonString);
             gamesList.addElement(labelString);
         }
 
         JList<String> labelList = new JList<String>(gamesList);
-        JScrollPane scrollPane = new JScrollPane(labelList);
+        scrollPane.setViewportView(labelList);
+        this.revalidate();
+        this.repaint();
         this.add(scrollPane, BorderLayout.CENTER);
 
 
     }
 
-    
+    private static String createHistoryLabel(String jsonString) {
+        JSONObject jsonObject = new JSONObject(jsonString);
+        StringBuilder labelString = new StringBuilder();
+
+        labelString.append(jsonObject.get("startTime"));
+        labelString.append(" L: ");
+        labelString.append(jsonObject.get("difficulty"));
+        labelString.append(" W: ");
+        labelString.append(jsonObject.get("winner"));
+
+        return labelString.toString();
+    }
 
     private static String readGameFile(File gameFile) {
         StringBuilder jsonString = new StringBuilder();
