@@ -1,6 +1,8 @@
 package ce326.hw3;
 
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -44,6 +46,8 @@ public class HistoryPanel extends JPanel {
 
         for(String curr: gamesList) {
             JLabel label = new JLabel(curr);
+            label.setForeground(Color.BLACK);
+
 
             tempPanel.add(label);
             label.addMouseListener(new MouseAdapter() {
@@ -53,6 +57,16 @@ public class HistoryPanel extends JPanel {
                     if (doubleClick.getClickCount() == 2) {
                         replayGame(gamePanel, label.getText());
                     }
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    label.setForeground(Color.BLUE);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    label.setForeground(Color.BLACK);
                 }
             });
         }
