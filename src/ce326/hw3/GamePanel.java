@@ -192,7 +192,7 @@ public class GamePanel extends JPanel {
         timer.setRepeats(false); 
         timer.start();
 
-        if (color == "red") {
+        if (color.equals("red")) {
             if (gameArray[0] != 'l'){
                 aiPlayer.makeMove(this);
             }

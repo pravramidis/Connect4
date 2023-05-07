@@ -18,10 +18,10 @@ public class Connect4 {
     }
 
     public static void startConnecting() {
-        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
-        UIManager.put("MenuItem.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
-        UIManager.put("Menu.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
-        UIManager.put("RadioButtonMenuItem.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
+        UIManager.put("Label.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
+        UIManager.put("MenuItem.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
+        UIManager.put("Menu.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
+        UIManager.put("RadioButtonMenuItem.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
 
         HistoryPanel.createHistoryDirectory();
 
