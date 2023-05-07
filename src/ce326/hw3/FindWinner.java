@@ -2,9 +2,13 @@ package ce326.hw3;
 
 import javax.swing.JLabel;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
@@ -125,12 +129,28 @@ public class FindWinner {
 
         JDialog winnerBox = new JDialog(connect4, "Winner");
         winnerBox.setSize(400,200);
+        JPanel boxPanel = new JPanel(new BorderLayout());
+        winnerBox.add(boxPanel);
+
         JLabel label = new JLabel(displayString);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.CENTER);
         Font winnerFont = new Font("Sans-serif", Font.BOLD, 30);
         label.setFont(winnerFont);
-        winnerBox.add(label);
+        boxPanel.add(label, BorderLayout.CENTER);
+
+        JButton closeButton = new JButton("OK");
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                winnerBox.dispose();
+            }
+        });
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        boxPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
+        buttonPanel.add(closeButton);
 
         winnerBox.setLocationRelativeTo(connect4);
         winnerBox.setVisible(true);
