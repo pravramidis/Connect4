@@ -1,7 +1,6 @@
 package ce326.hw3;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -21,6 +20,8 @@ public class HistoryPanel extends JPanel {
 
     public void listFiles(GamePanel gamePanel) {
         File gameFolder = null;
+        JPanel tempPanel = new JPanel();
+        tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.Y_AXIS));
 
         this.removeAll();
 
@@ -44,7 +45,7 @@ public class HistoryPanel extends JPanel {
         for(String curr: gamesList) {
             JLabel label = new JLabel(curr);
 
-            this.add(label);
+            tempPanel.add(label);
             label.addMouseListener(new MouseAdapter() {
 
                 @Override
@@ -56,13 +57,10 @@ public class HistoryPanel extends JPanel {
             });
         }
 
-        //JScrollPane scrollPane = new JScrollPane(this);
-        //scrollPane.setViewportView(labelList);
+        JScrollPane scrollPane = new JScrollPane(tempPanel);
+        this.add(scrollPane);
         this.revalidate();
         this.repaint();
-        // this.add(scrollPane, BorderLayout.CENTER);
-
-
     }
 
     private static String createHistoryLabel(String jsonString) {

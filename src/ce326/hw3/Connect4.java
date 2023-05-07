@@ -6,8 +6,8 @@ import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 
 public class Connect4 {
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = 700;
+    public static final int WIDTH = 875;
+    public static final int HEIGHT = 787;
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -55,7 +55,6 @@ public class Connect4 {
 
         Connect4.setJMenuBar(gameMenuBar);   
 
-        Connect4.pack();
     }
 
 

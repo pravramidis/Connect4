@@ -3,7 +3,6 @@ package ce326.hw3;
 import javax.swing.*;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class AIPlayer {
     JLabel [] labelArray = null;
