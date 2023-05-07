@@ -2,26 +2,27 @@ package ce326.hw3;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.*;
 import org.json.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class HistoryPanel extends JPanel {
-    JScrollPane scrollPane = new JScrollPane();
 
     public HistoryPanel(GamePanel gamePanel) {
-        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         listFiles(gamePanel);
     }
 
     public void listFiles(GamePanel gamePanel) {
         File gameFolder = null;
+
+        this.removeAll();
 
         gameFolder = createFileDescriptor(System.getProperty("user.home")+ "/Connect4/");
 
@@ -30,7 +31,6 @@ public class HistoryPanel extends JPanel {
         if (loggedGames == null) {
             return;
         }
-        // DefaultListModel<String> gamesList = new DefaultListModel<>();
         ArrayList<String> gamesList = new ArrayList<String>();
 
         for (File curr: loggedGames) {
@@ -40,17 +40,27 @@ public class HistoryPanel extends JPanel {
         }
 
         Collections.sort(gamesList, Collections.reverseOrder());
-        DefaultListModel<String> defaultList = new DefaultListModel<String>();
 
-        for(String game: gamesList) {
-            defaultList.addElement(game);
+        for(String curr: gamesList) {
+            JLabel label = new JLabel(curr);
+
+            this.add(label);
+            label.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent doubleClick) {
+                    if (doubleClick.getClickCount() == 2) {
+                        replayGame(gamePanel, label.getText());
+                    }
+                }
+            });
         }
 
-        JList<String> labelList = new JList<String>(defaultList);
-        scrollPane.setViewportView(labelList);
+        //JScrollPane scrollPane = new JScrollPane(this);
+        //scrollPane.setViewportView(labelList);
         this.revalidate();
         this.repaint();
-        this.add(scrollPane, BorderLayout.CENTER);
+        // this.add(scrollPane, BorderLayout.CENTER);
 
 
     }
@@ -60,8 +70,19 @@ public class HistoryPanel extends JPanel {
         StringBuilder labelString = new StringBuilder();
 
         labelString.append(jsonObject.get("startTime"));
-        labelString.append(" L: ");
-        labelString.append(jsonObject.get("difficulty"));
+        labelString.append("  L: ");
+        String difficultyString = jsonObject.get("difficulty").toString();
+        labelString.append(difficultyString);
+        if (difficultyString.equals("Trivial")) {
+            labelString.append("    ");
+        }
+        else if (difficultyString.equals("Hard")) {
+            labelString.append("      ");
+        }
+        else {
+            labelString.append(" ");
+        }
+
         labelString.append(" W: ");
         labelString.append(jsonObject.get("winner"));
 
@@ -154,6 +175,12 @@ public class HistoryPanel extends JPanel {
 
 
         return gameObject.toString();
+    }
+
+    private static void replayGame(GamePanel gamePanel, String fileName) {
+
+        System.out.println(fileName);
+
     }
     
 }

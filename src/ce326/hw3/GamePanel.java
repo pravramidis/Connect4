@@ -18,7 +18,7 @@ import java.util.List;
 public class GamePanel extends JPanel {
     public static final int lines = 6;
     public static final int columns = 7;
-    private static final int iconSize = 150;
+    private static final int iconSize = 125;
 
     public static ImageIcon whiteIcon = new ImageIcon("assets/white.png");
     public static ImageIcon yellowIcon = new ImageIcon("assets/yellow.png");

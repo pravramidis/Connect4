@@ -1,6 +1,8 @@
 package ce326.hw3;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+
 import java.awt.*;
 
 public class Connect4 {
@@ -16,6 +18,10 @@ public class Connect4 {
     }
 
     public static void startConnecting() {
+        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
+        UIManager.put("MenuItem.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
+        UIManager.put("Menu.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
+        UIManager.put("RadioButtonMenuItem.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
 
         HistoryPanel.createHistoryDirectory();
 
