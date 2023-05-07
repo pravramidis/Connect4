@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -87,30 +88,14 @@ public class GamePanel extends JPanel {
             labelArray[i].setVerticalAlignment(JLabel.CENTER);
             int pos = i;
 
-            labelArray[i].addMouseListener(new MouseAdapter() {
+            labelArray[i].setIcon(whiteIcon);
 
-                @Override
-                public void mouseClicked(MouseEvent doubleClick) {
-                    if (doubleClick.getClickCount() == 2) {
-                        placeLabel(pos, "red");
-                    }
-                }
-            });
-
-            /* Without the timer sometimes the labels appear as square and i have no idea why  */
-            Timer timer = new Timer(0  , new ActionListener() {
-                    public void actionPerformed(ActionEvent updateLabel) {
-                        for (int i = 0; i < lines*columns; i++){
-                            labelArray[i].setIcon(whiteIcon);
-                        }
-                    }
-            });
-            timer.setRepeats(false);
-            timer.start();
-            
+          
             this.add(labelArray[i]);
         }
 
+        addMouseListeners();
+        
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm:ss");
         String dateTime = currentDateTime.format(preferedFormat);
@@ -220,6 +205,32 @@ public class GamePanel extends JPanel {
 
 
         return -1; // will nener get here
+    }
+
+    public void addMouseListeners() {
+
+        for (int i = 0; i < columns * lines; i++) {
+            int pos = i;
+            labelArray[i].addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent doubleClick) {
+                    if (doubleClick.getClickCount() == 2) {
+                        placeLabel(pos, "red");
+                    }
+                }
+            });
+        }
+ 
+    }
+
+
+    public void removeMouseListeners() {
+
+        for (int i = 0; i < columns*lines; i++) {
+            MouseListener [] mouseListener = labelArray[i].getMouseListeners();
+            labelArray[i].removeMouseListener(mouseListener[0]);
+        }
     }
 
 }
