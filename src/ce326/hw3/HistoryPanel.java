@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -209,14 +211,24 @@ public class HistoryPanel extends JPanel {
 
 
         if (jsonObject.getString("startingPlayer").equals("ai")) {
-            color = "yellow";
-        }
-        else {
+            gamePanel.placeLabel(jsonArray.getInt(0), "yellow", true);
             color = "red";
         }
+        else {
+            gamePanel.placeLabel(jsonArray.getInt(0), "red", true);
+            color = "yellow";
+        }
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            gamePanel.placeLabel(jsonArray.getInt(i), color, true);
+        for (int i = 1; i < jsonArray.length(); i++) {
+            int pos = i;
+            String final_color = color;
+            Timer timer = new Timer(3000*pos, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    gamePanel.placeLabel(jsonArray.getInt(pos), final_color, true);
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
             if (color.equals("red")) {
                 color = "yellow";
             }
