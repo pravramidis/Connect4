@@ -39,7 +39,7 @@ public class Connect4 {
         mainPanel.setLayout(layout);
 
         GamePanel gamePanel = new GamePanel(Connect4, aiPlayer);
-        HistoryPanel historyPanel = new HistoryPanel(gamePanel);
+        HistoryPanel historyPanel = new HistoryPanel(mainPanel, gamePanel);
 
         mainPanel.add(gamePanel, "game");
         mainPanel.add(historyPanel, "history");

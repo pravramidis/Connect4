@@ -86,7 +86,6 @@ public class GamePanel extends JPanel {
             labelArray[i].setPreferredSize(new Dimension(iconSize,iconSize));
             labelArray[i].setHorizontalAlignment(JLabel.CENTER);
             labelArray[i].setVerticalAlignment(JLabel.CENTER);
-            int pos = i;
 
             labelArray[i].setIcon(whiteIcon);
 
@@ -102,8 +101,6 @@ public class GamePanel extends JPanel {
 
         gameStart = dateTime;
 
-        aiPlayer.makeMove(this);
-
         this.setFocusable(true);
         this.requestFocusInWindow(true);
         this.addKeyListener(new KeyListener() {
@@ -111,10 +108,10 @@ public class GamePanel extends JPanel {
             public void keyPressed(KeyEvent pressed) {
                 int code = pressed.getKeyCode(); 
                 if (code >= 48 && code <= 54) { 
-                    placeLabel(code-48, "red"); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
+                    placeLabel(code-48, "red", false); //The codes are from 48 to 54 so why subtrackt 48 to get the correct position
                 }
                 if (code >= 96 && code <= 102) { // for the numpad keys
-                    placeLabel(code-96, "red"); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
+                    placeLabel(code-96, "red", false); //The codes are from 96 to 102 so why subtrackt 96 to get the correct position
                 }
             }
 
@@ -129,7 +126,7 @@ public class GamePanel extends JPanel {
     }
     
 
-    public void placeLabel(int pos, String color) {
+    public void placeLabel(int pos, String color, boolean isReplay) {
         ImageIcon icon = null;
         ImageIcon tempIcon = null;
 
@@ -162,7 +159,9 @@ public class GamePanel extends JPanel {
         
         String displayString = FindWinner.searchConnections(gameArray);
         if (displayString != null) {
-            HistoryPanel.logGame(this, displayString, moveList);            
+            if (isReplay == false) {
+                HistoryPanel.logGame(this, displayString, moveList);            
+            }
             FindWinner.createModalBox(displayString, currFrame);
             FindWinner.preventFurtherPlacemetns(gameArray);
         }
@@ -176,6 +175,10 @@ public class GamePanel extends JPanel {
 
         timer.setRepeats(false); 
         timer.start();
+
+        if (isReplay) {
+            return;
+        }
 
         if (color.equals("red")) {
             if (gameArray[0] != 'l'){
@@ -216,7 +219,7 @@ public class GamePanel extends JPanel {
                 @Override
                 public void mouseClicked(MouseEvent doubleClick) {
                     if (doubleClick.getClickCount() == 2) {
-                        placeLabel(pos, "red");
+                        placeLabel(pos, "red", false);
                     }
                 }
             });

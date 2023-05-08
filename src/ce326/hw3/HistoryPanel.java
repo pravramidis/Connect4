@@ -2,6 +2,7 @@ package ce326.hw3;
 
 import javax.swing.*;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,12 +16,12 @@ import java.util.Scanner;
 
 public class HistoryPanel extends JPanel {
 
-    public HistoryPanel(GamePanel gamePanel) {
+    public HistoryPanel(JPanel mainPanel, GamePanel gamePanel) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        listFiles(gamePanel);
+        listFiles(mainPanel, gamePanel);
     }
 
-    public void listFiles(GamePanel gamePanel) {
+    public void listFiles(JPanel mainPanel, GamePanel gamePanel) {
         File gameFolder = null;
         JPanel tempPanel = new JPanel();
         tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.Y_AXIS));
@@ -37,17 +38,18 @@ public class HistoryPanel extends JPanel {
         ArrayList<String> gamesList = new ArrayList<String>();
 
         for (File curr: loggedGames) {
-            String jsonString = readGameFile(curr);
-            String labelString = createHistoryLabel(jsonString);
-            gamesList.add(labelString);
+            gamesList.add(curr.getName());
         }
 
         Collections.sort(gamesList, Collections.reverseOrder());
 
         for(String curr: gamesList) {
-            JLabel label = new JLabel(curr);
+            String filePath = System.getProperty("user.home")+ "/Connect4/" + curr;
+            File file = createFileDescriptor(filePath);
+            String jsonString = readGameFile(file);
+            String labelString = createHistoryLabel(jsonString);
+            JLabel label = new JLabel(labelString);
             label.setForeground(Color.BLACK);
-
 
             tempPanel.add(label);
             label.addMouseListener(new MouseAdapter() {
@@ -55,7 +57,7 @@ public class HistoryPanel extends JPanel {
                 @Override
                 public void mouseClicked(MouseEvent doubleClick) {
                     if (doubleClick.getClickCount() == 2) {
-                        replayGame(gamePanel, label.getText());
+                        replayGame(mainPanel, gamePanel, filePath);
                     }
                 }
 
@@ -189,10 +191,42 @@ public class HistoryPanel extends JPanel {
         return gameObject.toString();
     }
 
-    private static void replayGame(GamePanel gamePanel, String fileName) {
+    private static void replayGame(JPanel mainPanel, GamePanel gamePanel, String fileName) {
 
-        System.out.println(fileName);
+        File file = createFileDescriptor(fileName);
+        String jsonString = readGameFile(file);
 
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray jsonArray = jsonObject.getJSONArray("moves");
+
+        String color;
+
+        gamePanel.resetGrid();
+        gamePanel.removeMouseListeners();
+
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.next(mainPanel);
+
+
+        if (jsonObject.getString("startingPlayer").equals("ai")) {
+            color = "yellow";
+        }
+        else {
+            color = "red";
+        }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            gamePanel.placeLabel(jsonArray.getInt(i), color, true);
+            if (color.equals("red")) {
+                color = "yellow";
+            }
+            else {
+                color = "red";
+            }
+        }
+
+        gamePanel.addMouseListeners();
     }
+
     
 }

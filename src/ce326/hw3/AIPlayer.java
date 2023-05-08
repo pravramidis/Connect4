@@ -40,7 +40,7 @@ public class AIPlayer {
             }
         }
         
-        gamePanel.placeLabel(position, "yellow"); 
+        gamePanel.placeLabel(position, "yellow", false); 
 
         //evaluatePosition(gameArray);
     }
@@ -197,10 +197,10 @@ public class AIPlayer {
     int miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
         String winner = FindWinner.searchConnections(gameArray);
 
-        if(winner == "You won!") {
+        if(winner != null && winner.equals("You won!")) {
             return -1000;
         }
-        if(winner == "You lost!") {
+        if(winner != null && winner.equals("You lost!")) {
             return 1000;
         }
 

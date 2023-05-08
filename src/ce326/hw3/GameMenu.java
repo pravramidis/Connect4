@@ -131,7 +131,7 @@ public class GameMenu {
             @Override
             public void mouseClicked(MouseEvent e) {
                 cardLayout.next(mainPanel);
-                historyPanel.listFiles(gamePanel);
+                historyPanel.listFiles(mainPanel, gamePanel);
                 gamePanel.requestFocus();
             }
 
