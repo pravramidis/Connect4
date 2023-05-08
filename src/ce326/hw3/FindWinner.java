@@ -16,8 +16,30 @@ public class FindWinner {
     public static final int columns = 7;
     
     public static String searchConnections (char [] gameArray) {
+        String displayString = null;
+    
+        displayString = checkForDraw(gameArray);
+        if (displayString != null) {
+            return displayString;
+        }
+        displayString = checkHorizontal(gameArray);
+        if (displayString != null) {
+            return displayString;
+        }
+        displayString = checkVertical(gameArray);
+        if (displayString != null) {
+            return displayString;
+        }
+        displayString = checkDiagonals(gameArray);
+        if (displayString != null) {
+            return displayString;
+        }
 
-        /*Checks for draws */
+        return null;
+    }
+
+    /*Checks for draws */
+    private static String checkForDraw(char [] gameArray) {
         int countWhite = 0;
         for (int i = 0; i < rows*columns; i++) {
             if (gameArray[i] == 'w') {
@@ -27,8 +49,12 @@ public class FindWinner {
         if (countWhite == 0) {
             return "Draw!";
         }
-       
-        /* Checks for winner by row*/
+        
+        return null;
+    }
+
+    /* Checks for winner by row*/
+    private static String checkHorizontal(char [] gameArray) {
         for (int i = 0;  i < rows; i++ ) {
             for (int j = 0,countRed = 0, countYellow = 0; j < columns; j++) {
                 if (gameArray[i*columns+j] == 'y') {
@@ -52,7 +78,11 @@ public class FindWinner {
             } 
         }
 
-        /* Checks for winner by column */
+        return null;
+    }
+
+    /* Checks for winner by column */
+    private static String checkVertical(char [] gameArray) {
         for (int i = 0;  i < columns; i++ ) {
             for (int j = 0,countRed = 0, countYellow = 0; j < rows; j++) {
                 if (gameArray[j*columns+i] == 'y') {
@@ -76,51 +106,68 @@ public class FindWinner {
             } 
         }
 
-        /*Checks for winner diagonally */
-        for (int i = 0; i < rows + columns - 1; i++) {
-            for (int j = 0, countRed1 = 0, countYellow1 = 0, countRed2 = 0, countYellow2 = 0; j <= i; j++) {
-                int k = i - j;
-                if (k >= 0 && k < rows && j < columns) {
-                    // Check diagonal from top left to bottom right
-                    if (gameArray[k * columns + j] == 'y') {
-                        countYellow1++;
-                        countRed1 = 0;
-                    } else if (gameArray[k * columns + j] == 'r') {
-                        countRed1++;
-                        countYellow1 = 0;
-                    } else {
-                        countYellow1 = 0;
-                        countRed1 = 0;
+        return null;
+    }
+
+    /*Checks for winner diagonally */
+    private static String checkDiagonals(char [] gameArray) {
+        for (int i = 0; i < rows-3; i++) {
+            for (int j = 0; j < columns - 3; j++) {
+                int countRed = 0;
+                int countYellow = 0;
+                for (int k = 0; k < 4; k++) {
+                    if (gameArray[(i+k)*columns + j +k] == 'y') {
+                        countYellow++;
+                        countRed = 0;
                     }
-                    if (countYellow1 == 4) {
-                        return "You lost!";
-                    } else if (countRed1 == 4) {
-                        return "You won!";
+                    else if (gameArray[(i+k)*columns + j + k] == 'r') {
+                        countRed++;
+                        countYellow = 0;
                     }
-        
-                    // Check diagonal from top right to bottom left
-                    if (gameArray[k * columns + columns - j - 1] == 'y') {
-                        countYellow2++;
-                        countRed2 = 0;
-                    } else if (gameArray[k * columns + columns - j - 1] == 'r') {
-                        countRed2++;
-                        countYellow2 = 0;
-                    } else {
-                        countYellow2 = 0;
-                        countRed2 = 0;
+                    else {
+                        countRed = 0;
+                        countYellow = 0;
                     }
-                    if (countYellow2 == 4) {
-                        return "You lost!";
-                    } else if (countRed2 == 4) {
-                        return "You won!";
+                }
+                if (countYellow == 4) {
+                    return "You lost!";
+                }
+                else if (countRed == 4) {
+                    return "You won!";
+                }
+            }
+        }
+
+
+        for (int i = rows -3; i < rows; i++) {
+            for (int j = columns -4 ; j < columns; j++) {
+                int countRed = 0;
+                int countYellow = 0;
+                for (int k = 0; k < 4; k++) {
+                    if (gameArray[(i-k)*columns + j +k] == 'y') {
+                        countYellow++;
+                        countRed = 0;
                     }
+                    else if (gameArray[(i-k)*columns + j + k] == 'r') {
+                        countRed++;
+                        countYellow = 0;
+                    }
+                    else {
+                        countRed = 0;
+                        countYellow = 0;
+                    }
+                }
+                if (countYellow == 4) {
+                    return "You lost!";
+                }
+                else if (countRed == 4) {
+                    return "You won!";
                 }
             }
         }
 
         return null;
     }
-
 
     static void createModalBox(String displayString, JFrame connect4) {
 
