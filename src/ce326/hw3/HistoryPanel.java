@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class HistoryPanel extends JPanel {
+    private static ArrayList<Timer> timerList = new ArrayList<>();
 
     public HistoryPanel(JPanel mainPanel, GamePanel gamePanel) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -59,6 +60,7 @@ public class HistoryPanel extends JPanel {
                 @Override
                 public void mouseClicked(MouseEvent doubleClick) {
                     if (doubleClick.getClickCount() == 2) {
+                        stopAllTimers();
                         replayGame(mainPanel, gamePanel, filePath);
                     }
                 }
@@ -217,7 +219,9 @@ public class HistoryPanel extends JPanel {
         else {
             gamePanel.placeLabel(jsonArray.getInt(0), "red", true);
             color = "yellow";
+            color = "red";
         }
+
 
         for (int i = 1; i < jsonArray.length(); i++) {
             int pos = i;
@@ -227,6 +231,7 @@ public class HistoryPanel extends JPanel {
                     gamePanel.placeLabel(jsonArray.getInt(pos), final_color, true);
                 }
             });
+            timerList.add(timer);
             timer.setRepeats(false);
             timer.start();
             if (color.equals("red")) {
@@ -240,5 +245,10 @@ public class HistoryPanel extends JPanel {
         gamePanel.addMouseListeners();
     }
 
+    public void stopAllTimers() {
+        for (Timer currTimer: timerList) {
+            currTimer.stop();
+        }
+    }
     
 }

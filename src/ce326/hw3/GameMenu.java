@@ -3,8 +3,8 @@ package ce326.hw3;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -66,6 +66,7 @@ public class GameMenu {
 
         trivial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Trivial";
                 LocalDateTime currentDateTime = LocalDateTime.now();
                 gamePanel.gameStart = currentDateTime.format(preferedFormat);
@@ -87,6 +88,7 @@ public class GameMenu {
 
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Medium";
                 LocalDateTime currentDateTime = LocalDateTime.now();
                 gamePanel.gameStart = currentDateTime.format(preferedFormat);
@@ -108,6 +110,7 @@ public class GameMenu {
 
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Hard";
                 LocalDateTime currentDateTime = LocalDateTime.now();
                 gamePanel.gameStart = currentDateTime.format(preferedFormat);
@@ -127,26 +130,13 @@ public class GameMenu {
             }
         });
 
-        menuHistory.addMouseListener(new MouseListener() {
+        menuHistory.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 cardLayout.next(mainPanel);
                 historyPanel.listFiles(mainPanel, gamePanel);
                 gamePanel.requestFocus();
             }
-
-            /* Included to satisfy mouselistener requirements */
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-
-            @Override
-            public void mousePressed(MouseEvent e) {}
-
-            @Override
-            public void mouseExited(MouseEvent e) {}
-
-            @Override
-            public void mouseEntered(MouseEvent e) {}
         });
 
 
