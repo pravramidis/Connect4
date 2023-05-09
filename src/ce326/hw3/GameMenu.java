@@ -66,67 +66,25 @@ public class GameMenu {
 
         trivial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Trivial";
-                LocalDateTime currentDateTime = LocalDateTime.now();
-                gamePanel.gameStart = currentDateTime.format(preferedFormat);
-                cardLayout.show(mainPanel, "game");
-                gamePanel.requestFocus();
-
-                gamePanel.resetGrid();
-                gamePanel.moveList.clear();
                 aiPlayer.depth = 1;
-                if (ai.isSelected()) {
-                    gamePanel.startingPlayer = "ai";
-                    aiPlayer.makeMove(gamePanel);
-                }
-                else {
-                    gamePanel.startingPlayer = "you";
-                }
+                startGame(ai, preferedFormat, cardLayout); 
             }
         });
 
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Medium";
-                LocalDateTime currentDateTime = LocalDateTime.now();
-                gamePanel.gameStart = currentDateTime.format(preferedFormat);
-
-                cardLayout.show(mainPanel, "game");
-                gamePanel.requestFocus();
-                gamePanel.resetGrid();
-                gamePanel.moveList.clear();
                 aiPlayer.depth = 3;
-                if (ai.isSelected()) {
-                    gamePanel.startingPlayer = "ai";
-                    aiPlayer.makeMove(gamePanel);
-                }
-                else {
-                    gamePanel.startingPlayer = "you";
-                }
+                startGame(ai, preferedFormat, cardLayout);
             }
         });
 
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Hard";
-                LocalDateTime currentDateTime = LocalDateTime.now();
-                gamePanel.gameStart = currentDateTime.format(preferedFormat);
-
-                cardLayout.show(mainPanel, "game");
-                gamePanel.requestFocus();
-                gamePanel.resetGrid();
-                gamePanel.moveList.clear();
                 aiPlayer.depth = 5;
-                if (ai.isSelected()) {
-                    gamePanel.startingPlayer = "ai";
-                    aiPlayer.makeMove(gamePanel);
-                }
-                else {
-                    gamePanel.startingPlayer = "you";
-                }
+                startGame(ai, preferedFormat, cardLayout);
             }
         });
 
@@ -150,4 +108,21 @@ public class GameMenu {
         return gameMenu;
     }
 
+    public void startGame(JRadioButtonMenuItem ai, DateTimeFormatter preferedFormat, CardLayout cardLayout) {
+        historyPanel.stopAllTimers();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        gamePanel.gameStart = currentDateTime.format(preferedFormat);
+
+        cardLayout.show(mainPanel, "game");
+        gamePanel.requestFocus();
+        gamePanel.resetGrid();
+        gamePanel.moveList.clear();
+        if (ai.isSelected()) {
+            gamePanel.startingPlayer = "ai";
+            aiPlayer.makeMove(gamePanel);
+        }
+        else {
+            gamePanel.startingPlayer = "you";
+        }
+    }
 }
