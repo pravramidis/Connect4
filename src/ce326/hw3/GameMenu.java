@@ -150,11 +150,4 @@ public class GameMenu {
         return gameMenu;
     }
 
-
-    class newGameListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-            gamePanel.resetGrid();
-        }
-    }
 }

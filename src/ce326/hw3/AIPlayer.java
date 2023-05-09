@@ -22,6 +22,8 @@ public class AIPlayer {
    
     void makeMove(GamePanel gamePanel) {
 
+
+        System.out.println("new move");
         int position = 0, max = -Integer.MAX_VALUE, value;
         for (int i = 0; i < columns; i++) {
 
@@ -33,7 +35,8 @@ public class AIPlayer {
             int pos = GamePanel.findPos(moveArray, i);
             moveArray[pos] = 'y';
 
-            value = miniMax(moveArray, depth, false, -Integer.MAX_VALUE, Integer.MAX_VALUE);
+            value = miniMax(moveArray, depth-1, false, -Integer.MAX_VALUE, Integer.MAX_VALUE);
+            System.out.println("Value: "+value+" pos: "+ i);
             if (value > max) {
                 position = i;
                 max = value;
@@ -203,6 +206,9 @@ public class AIPlayer {
         if(winner != null && winner.equals("You lost!")) {
             return 1000;
         }
+        if (winner != null && winner.equals(("Draw!"))) {
+            return 0;
+        }
 
         if (depth == 0) {
             return evaluatePosition(gameArray);
@@ -238,7 +244,7 @@ public class AIPlayer {
         for (int i = 0; i < columns; i++) {
 
             if (!GamePanel.checkValidPos(gameArray, i)) {
-                break;
+                continue;
             }
 
             char [] moveArray = Arrays.copyOf(gameArray, gameArray.length);
