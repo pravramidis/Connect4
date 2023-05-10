@@ -119,7 +119,7 @@ public class GameMenu {
         gamePanel.moveList.clear();
         if (ai.isSelected()) {
             gamePanel.startingPlayer = "ai";
-            aiPlayer.makeMove(gamePanel);
+            gamePanel.placeLabel(3, "yellow", false);
         }
         else {
             gamePanel.startingPlayer = "you";

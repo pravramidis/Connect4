@@ -75,6 +75,7 @@ public class AIPlayer {
                 // evaluation += evaluateFour(four);
             } 
         }
+        // System.out.print(" horizontal: " + evaluation);
 
 
         
@@ -97,6 +98,9 @@ public class AIPlayer {
             } 
         }
 
+
+        // System.out.print(" vertical: " + evaluation);
+
         for (int i = 0; i < rows-3; i++) {
             for (int j = 0; j < columns - 3; j++) {
                 countRed = 0;
@@ -113,22 +117,22 @@ public class AIPlayer {
             }
         }
 
-
-        for (int i = rows -3; i < rows; i++) {
-            for (int j = columns -4 ; j < columns; j++) {
+        for (int i = rows -4; i > 0; i--) {
+            for (int j = columns -4  ; j < columns; j++) {
                 countRed = 0;
                 countYellow = 0;
                 for (int k = 0; k < 4; k++) {
-                    if (gameArray[(i-k)*columns + j +k] == 'y') {
+                    if (gameArray[(i+k)*columns + j -k] == 'y') {
                         countYellow++;
                     }
-                    else if (gameArray[(i-k)*columns + j + k] == 'r') {
+                    else if (gameArray[(i+k)*columns + j - k] == 'r') {
                         countRed++;
                     }
                 }
                 evaluation += evaluateFour(countRed, countYellow);
             }
         }
+        // System.out.print(" diagonal: " + evaluation);
 
         // System.out.println("evaluation: " + evaluation);
         return evaluation;
@@ -153,7 +157,7 @@ public class AIPlayer {
                     return 16;
                 }
                 case 4: {
-                    return 1000;
+                    return 10000;
                 }
             }
         }
@@ -169,22 +173,12 @@ public class AIPlayer {
                     return -16;
                 }
                 case 4: {
-                    return -1000;
+                    return -10000;
                 }
             }
         }
 
         return evaluation;
-    }
-
-    class BestChild {
-        int value;
-        int position;
-
-        public BestChild(int value, int position) {
-            this.value = value;
-            this.position = position;
-        }
     }
 
     void pringArray(char [] gameArray) {
@@ -201,10 +195,10 @@ public class AIPlayer {
         String winner = FindWinner.searchConnections(gameArray);
 
         if(winner != null && winner.equals("You won!")) {
-            return -1000;
+            return -10000;
         }
         if(winner != null && winner.equals("You lost!")) {
-            return 1000;
+            return 10000;
         }
         if (winner != null && winner.equals(("Draw!"))) {
             return 0;

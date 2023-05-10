@@ -139,16 +139,16 @@ public class FindWinner {
         }
 
 
-        for (int i = rows -3; i < rows; i++) {
-            for (int j = columns -4 ; j < columns; j++) {
+        for (int i = rows -4; i > 0; i--) {
+            for (int j = columns -4  ; j < columns; j++) {
                 int countRed = 0;
                 int countYellow = 0;
                 for (int k = 0; k < 4; k++) {
-                    if (gameArray[(i-k)*columns + j +k] == 'y') {
+                    if (gameArray[(i+k)*columns + j -k] == 'y') {
                         countYellow++;
                         countRed = 0;
                     }
-                    else if (gameArray[(i-k)*columns + j + k] == 'r') {
+                    else if (gameArray[(i+k)*columns + j - k] == 'r') {
                         countRed++;
                         countYellow = 0;
                     }
