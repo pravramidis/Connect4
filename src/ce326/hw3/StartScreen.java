@@ -1,13 +1,9 @@
 package ce326.hw3;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +13,8 @@ import java.time.format.DateTimeFormatter;
 public class StartScreen extends JPanel {
     GamePanel gamePanel = null;
     JPanel mainPanel = null;
-   
+  
+    /* Creates a start screen */
     public StartScreen(GamePanel gamePanel, JPanel mainPanel, GameMenu gameMenu) {
 
         this.setLayout(new BorderLayout(ALLBITS, ABORT));

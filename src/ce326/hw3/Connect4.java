@@ -5,6 +5,7 @@ import javax.swing.plaf.FontUIResource;
 
 import java.awt.*;
 
+/* The main class of the program */
 public class Connect4 {
     public static final int WIDTH = 875;
     public static final int HEIGHT = 787;
@@ -17,6 +18,7 @@ public class Connect4 {
         });
     }
 
+    /* Creates all the necessary components that are added to the frame */
     public static void startConnecting() {
         UIManager.put("Label.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
         UIManager.put("MenuItem.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));

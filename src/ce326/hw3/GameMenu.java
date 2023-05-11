@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-
+/* Contains all the items for the menu */
 public class GameMenu {
     JFrame currFrame = null;
     GamePanel gamePanel = null;
@@ -108,6 +108,7 @@ public class GameMenu {
         return gameMenu;
     }
 
+    /* Starts a new game */
     public void startGame(JRadioButtonMenuItem ai, DateTimeFormatter preferedFormat, CardLayout cardLayout) {
         historyPanel.stopAllTimers();
         LocalDateTime currentDateTime = LocalDateTime.now();

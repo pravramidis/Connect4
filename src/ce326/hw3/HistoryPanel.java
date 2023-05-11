@@ -24,6 +24,7 @@ public class HistoryPanel extends JPanel {
         listFiles(mainPanel, gamePanel);
     }
 
+    /* Lists all the saved games */
     public void listFiles(JPanel mainPanel, GamePanel gamePanel) {
         File gameFolder = null;
         JPanel tempPanel = new JPanel();
@@ -83,6 +84,7 @@ public class HistoryPanel extends JPanel {
         this.repaint();
     }
 
+    /* Creates a label for each saved game */
     private static String createHistoryLabel(String jsonString) {
         JSONObject jsonObject = new JSONObject(jsonString);
         StringBuilder labelString = new StringBuilder();
@@ -107,6 +109,7 @@ public class HistoryPanel extends JPanel {
         return labelString.toString();
     }
 
+    /* Read a saved game file */
     private static String readGameFile(File gameFile) {
         StringBuilder jsonString = new StringBuilder();
 
@@ -124,6 +127,7 @@ public class HistoryPanel extends JPanel {
         return jsonString.toString();
     }
 
+    /* Creates a directory for the saved games in the users home directory */
     public static void createHistoryDirectory() {
         File connect4 = null;
 
@@ -134,6 +138,7 @@ public class HistoryPanel extends JPanel {
         }
     }
 
+    /* Saves a game to a file */
     public static void logGame(GamePanel gamePanel, String displayString, List<Integer> moveList) {
         File gameFile = null;
         
@@ -157,7 +162,7 @@ public class HistoryPanel extends JPanel {
 
 
     }
-    
+   
     public static File createFileDescriptor(String name) {
         File file = null;
 
@@ -170,6 +175,7 @@ public class HistoryPanel extends JPanel {
         return file;
     }
 
+    /* Creates the contents of the save file */
     private static String createJsonString(GamePanel gamePanel, String displayString, List<Integer> moveList) {
         JSONObject gameObject = new JSONObject();
         JSONArray moveArray = new JSONArray(moveList);
@@ -188,10 +194,11 @@ public class HistoryPanel extends JPanel {
         else {
             gameObject.put("winner", "D");
         }
-        
+
         return gameObject.toString();
     }
 
+    /* Plays the moves in the save file */
     private static void replayGame(JPanel mainPanel, GamePanel gamePanel, String fileName) {
 
         File file = createFileDescriptor(fileName);
@@ -243,6 +250,7 @@ public class HistoryPanel extends JPanel {
         gamePanel.addMouseListeners();
     }
 
+    /* Stops the timers in case the replay is interupted by the user staring a new game */
     public void stopAllTimers() {
         for (Timer currTimer: timerList) {
             currTimer.stop();

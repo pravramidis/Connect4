@@ -19,7 +19,8 @@ public class AIPlayer {
         this.currFrame = currFrame;
         this.depth = depth;
     }
-   
+  
+    /* Calls the minimax algorithm for every child of the root node */
     void makeMove(GamePanel gamePanel) {
 
 
@@ -48,6 +49,7 @@ public class AIPlayer {
         //evaluatePosition(gameArray);
     }
 
+    /* Evaluates a position */
     int evaluatePosition(char [] gameArray) {
         int evaluation = 0;
         int countRed = 0;
@@ -72,10 +74,8 @@ public class AIPlayer {
                     }
                 }
                 evaluation += evaluateFour(countRed, countYellow);
-                // evaluation += evaluateFour(four);
             } 
         }
-        // System.out.print(" horizontal: " + evaluation);
 
 
         
@@ -97,9 +97,6 @@ public class AIPlayer {
          
             } 
         }
-
-
-        // System.out.print(" vertical: " + evaluation);
 
         for (int i = 0; i < rows-3; i++) {
             for (int j = 0; j < columns - 3; j++) {
@@ -132,14 +129,10 @@ public class AIPlayer {
                 evaluation += evaluateFour(countRed, countYellow);
             }
         }
-        // System.out.print(" diagonal: " + evaluation);
-
-        // System.out.println("evaluation: " + evaluation);
         return evaluation;
     }
 
     int evaluateFour(int countRed, int countYellow) {
-    // int evaluateFour(String four) {
         int evaluation = 0;
 
         if ((countRed > 0 && countYellow > 0) || (countRed == 0 && countYellow == 0)) {
@@ -181,16 +174,7 @@ public class AIPlayer {
         return evaluation;
     }
 
-    void pringArray(char [] gameArray) {
-        System.out.println("current state");
-        for (int i = 0;  i < rows; i++ ) {
-            for (int j = 0; j < columns; j++) {
-                System.out.print(gameArray[i*columns+j]);
-            } 
-            System.out.println();
-        }
-    }
-
+    /* Implements the minimax algorithm */
     int miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
         String winner = FindWinner.searchConnections(gameArray);
 

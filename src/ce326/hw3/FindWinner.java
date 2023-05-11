@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import javax.swing.*;
 
+/* Checks for a winner */
 public class FindWinner {
     public static final int rows = 6;
     public static final int columns = 7;
@@ -169,6 +170,7 @@ public class FindWinner {
         return null;
     }
 
+    /* Creates a window declaring the winner */
     static void createModalBox(String displayString, JFrame connect4) {
 
         JDialog winnerBox = new JDialog(connect4, "Winner");
@@ -200,7 +202,8 @@ public class FindWinner {
         winnerBox.setVisible(true);
     }
 
-    static void preventFurtherPlacemetns(char [] gameArray) {
+    /* Changes all the characters of the char array to l so there are no w and the placement function can't place any labels */
+    static void preventFurtherPlacements(char [] gameArray) {
         Arrays.fill(gameArray, 'l');
     }
 }

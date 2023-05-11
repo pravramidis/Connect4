@@ -37,6 +37,7 @@ public class GamePanel extends JPanel {
     String startingPlayer = "ai";
     List<Integer> moveList = new ArrayList<Integer>();
 
+    /* Creates the icons based on the pre-determined sizes */
     void createIcons() {
         Image whiteImage = whiteIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
         whiteIcon = new ImageIcon(whiteImage);
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel {
 
     }
 
+    /* Resets the labels and the char array to white */
     public void resetGrid() {
         for (int i = 0; i < lines*columns; i ++) {
             labelArray[i].setIcon(whiteIcon);
@@ -62,6 +64,7 @@ public class GamePanel extends JPanel {
         Arrays.fill(gameArray, 'w');
     }
 
+    /* Creates the game panel */
     public GamePanel(JFrame currFrame, AIPlayer newAiPlayer) {
         this.aiPlayer = newAiPlayer;
         newAiPlayer.gameArray = gameArray;
@@ -125,7 +128,7 @@ public class GamePanel extends JPanel {
 
     }
     
-
+    /* Places a label */
     public void placeLabel(int pos, String color, boolean isReplay) {
         ImageIcon icon = null;
         ImageIcon tempIcon = null;
@@ -163,7 +166,7 @@ public class GamePanel extends JPanel {
                 HistoryPanel.logGame(this, displayString, moveList);            
             }
             FindWinner.createModalBox(displayString, currFrame);
-            FindWinner.preventFurtherPlacemetns(gameArray);
+            FindWinner.preventFurtherPlacements(gameArray);
         }
 
         Timer timer = new Timer(1000, new ActionListener() {
@@ -188,6 +191,7 @@ public class GamePanel extends JPanel {
 
     }
 
+    /* Checks if a column is full */
     public static boolean checkValidPos(char [] gameArray, int pos) {
         pos = pos%columns;
 
@@ -199,6 +203,7 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /* Finds the position for the label */
     public static int findPos(char [] gameArray, int pos) {
         for (int j = (pos%columns); j < lines*columns; j += columns) {      
             if ((j > 34 || gameArray[j+columns] != 'w') && gameArray[j] == 'w') {
@@ -210,6 +215,7 @@ public class GamePanel extends JPanel {
         return -1; // will nener get here
     }
 
+    /* Adds a mouse listener to every label */
     public void addMouseListeners() {
 
         for (int i = 0; i < columns * lines; i++) {
