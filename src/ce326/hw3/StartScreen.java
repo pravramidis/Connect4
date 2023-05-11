@@ -55,10 +55,13 @@ public class StartScreen extends JPanel {
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         DateTimeFormatter preferedFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm:ss");
 
+        JPanel toRemove = this; //used to remove the start screen
+
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gamePanel.Difficulty = "Trivial";
                 aiPlayer.depth = 1;
+                mainPanel.remove(toRemove);
                 gameMenu.startGame(gameMenu.ai, preferedFormat, cardLayout); 
             }
         });

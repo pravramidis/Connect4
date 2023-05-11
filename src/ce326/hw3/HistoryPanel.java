@@ -188,10 +188,7 @@ public class HistoryPanel extends JPanel {
         else {
             gameObject.put("winner", "D");
         }
-
-
-
-
+        
         return gameObject.toString();
     }
 
@@ -209,7 +206,8 @@ public class HistoryPanel extends JPanel {
         gamePanel.removeMouseListeners();
 
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-        cardLayout.next(mainPanel);
+        cardLayout.show(mainPanel, "game");
+
 
 
         if (jsonObject.getString("startingPlayer").equals("ai")) {
