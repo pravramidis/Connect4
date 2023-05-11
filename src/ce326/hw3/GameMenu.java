@@ -19,6 +19,7 @@ public class GameMenu {
     HistoryPanel historyPanel = null;
     AIPlayer aiPlayer = null;
     JPanel mainPanel = null;
+    JRadioButtonMenuItem ai = new JRadioButtonMenuItem("AI");
 
     public GameMenu(JFrame currFrame, GamePanel gamePanel, AIPlayer aiPlayer, JPanel mainPanel, HistoryPanel historyPanel) {
         this.currFrame = currFrame; 
@@ -52,9 +53,8 @@ public class GameMenu {
 
         ButtonGroup groupPlayer = new ButtonGroup();
 
-        JRadioButtonMenuItem you, ai;
+        JRadioButtonMenuItem you;
         you = new JRadioButtonMenuItem("You");
-        ai = new JRadioButtonMenuItem("AI");
 
         ai.setSelected(true);
 

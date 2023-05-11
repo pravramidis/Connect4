@@ -22,6 +22,7 @@ public class Connect4 {
         UIManager.put("MenuItem.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
         UIManager.put("Menu.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
         UIManager.put("RadioButtonMenuItem.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
+        UIManager.put("Button.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 40)));
 
         HistoryPanel.createHistoryDirectory();
 
@@ -41,19 +42,25 @@ public class Connect4 {
         GamePanel gamePanel = new GamePanel(Connect4, aiPlayer);
         HistoryPanel historyPanel = new HistoryPanel(mainPanel, gamePanel);
 
-        mainPanel.add(gamePanel, "game");
-        mainPanel.add(historyPanel, "history");
-
-        layout.show(mainPanel, "game"); 
-        gamePanel.setFocusable(true);
-        gamePanel.requestFocus();
-
-        Connect4.add(mainPanel);
-
         GameMenu gameMenu = new GameMenu(Connect4, gamePanel, aiPlayer, mainPanel, historyPanel);
         JMenuBar gameMenuBar = gameMenu.createGameMenu();
 
-        Connect4.setJMenuBar(gameMenuBar);   
+        StartScreen startScreen = new StartScreen(gamePanel, mainPanel, gameMenu);
+
+        mainPanel.add(gamePanel, "game");
+        mainPanel.add(historyPanel, "history");
+        mainPanel.add(startScreen, "start");
+
+        Connect4.add(mainPanel);
+
+        layout.show(mainPanel, "start"); 
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocus();
+
+
+        Connect4.setJMenuBar(gameMenuBar); 
+        
+        Connect4.setResizable(false);
 
     }
 
