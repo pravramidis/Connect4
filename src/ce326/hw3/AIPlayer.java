@@ -23,7 +23,7 @@ public class AIPlayer {
     /* Calls the minimax algorithm for every child of the root node */
     void makeMove(GamePanel gamePanel) {
 
-
+        System.out.println("new move");
         int position = 0, max = -Integer.MAX_VALUE, value;
         for (int i = 0; i < columns; i++) {
 
@@ -110,7 +110,7 @@ public class AIPlayer {
             }
         }
 
-        for (int i = rows -4; i > 0; i--) {
+        for (int i = rows -4; i >= 0; i--) {
             for (int j = columns -4  ; j < columns; j++) {
                 countRed = 0;
                 countYellow = 0;
