@@ -20,7 +20,6 @@ public class GameMenu {
     AIPlayer aiPlayer = null;
     JPanel mainPanel = null;
     JRadioButtonMenuItem ai = new JRadioButtonMenuItem("AI");
-    JMenu menuHistory = new JMenu("History");
 
     public GameMenu(JFrame currFrame, GamePanel gamePanel, AIPlayer aiPlayer, JPanel mainPanel, HistoryPanel historyPanel) {
         this.currFrame = currFrame; 
@@ -35,6 +34,7 @@ public class GameMenu {
         JMenu menuNewGame = new JMenu("New Game");
         JMenu menuPlayer = new JMenu("1st Player");
         JMenu menuHelp = new JMenu("Help");
+        JMenu menuHistory = new JMenu("History");
 
         gameMenu.add(menuNewGame);
         gameMenu.add(menuPlayer);
@@ -110,6 +110,10 @@ public class GameMenu {
 
     /* Starts a new game */
     public void startGame(JRadioButtonMenuItem ai, DateTimeFormatter preferedFormat, CardLayout cardLayout) {
+        if (mainPanel.getComponentCount() != 2) {
+            return;
+        }
+
         historyPanel.stopAllTimers();
         LocalDateTime currentDateTime = LocalDateTime.now();
         gamePanel.gameStart = currentDateTime.format(preferedFormat);
