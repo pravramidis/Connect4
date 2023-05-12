@@ -233,7 +233,9 @@ public class GamePanel extends JPanel {
  
     }
 
-
+    /* Remove the mouslistener of each label
+     * mainly used to prevent the player from placing labels during the replays
+     */
     public void removeMouseListeners() {
 
         for (int i = 0; i < columns*lines; i++) {

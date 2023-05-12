@@ -20,6 +20,7 @@ public class Connect4 {
 
     /* Creates all the necessary components that are added to the frame */
     public static void startConnecting() {
+        /* Change all the defaults to the desired font */
         UIManager.put("Label.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
         UIManager.put("MenuItem.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
         UIManager.put("Menu.font", new FontUIResource(new Font("Sans-serif", Font.PLAIN, 20)));
@@ -37,6 +38,7 @@ public class Connect4 {
         AIPlayer aiPlayer = new AIPlayer(null, null, Connect4, 1);
 
 
+        /* Using a the CardLayout allows easily switching between the panels */
         JPanel mainPanel = new JPanel();
         CardLayout layout = new CardLayout();
         mainPanel.setLayout(layout);

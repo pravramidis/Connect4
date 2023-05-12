@@ -52,13 +52,11 @@ public class AIPlayer {
         int countYellow = 0;
 
 
-
+        /* Evaluates by row*/
         for (int i = 0;  i < rows; i++ ) {
             for (int j = 0; j < columns-3; j++) {
                 countRed = 0;
                 countYellow = 0; 
-
-                // String four = new String(gameArray, i*columns +j,  4);
 
                 for (int k = 0; k < 4; k++) {
                     char curr = gameArray[i*columns + j + k];
@@ -75,6 +73,7 @@ public class AIPlayer {
 
 
         
+        /* Evaluates by column */
         for (int i = 0;  i < columns; i++ ) {
             for (int j = 0; j < rows-3; j++) {
                 countRed = 0;
@@ -93,7 +92,8 @@ public class AIPlayer {
          
             } 
         }
-
+        
+        /*Evaluates diagonally */
         for (int i = 0; i < rows-3; i++) {
             for (int j = 0; j < columns - 3; j++) {
                 countRed = 0;
@@ -170,7 +170,7 @@ public class AIPlayer {
         return evaluation;
     }
 
-    /* Implements the minimax algorithm */
+    /* Implements the minimax algorithm with alpha beta pruning*/
     int miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
         String winner = FindWinner.searchConnections(gameArray);
 
