@@ -21,11 +21,11 @@ public class GamePanel extends JPanel {
     public static final int columns = 7;
     private static final int iconSize = 125;
 
-    public static ImageIcon whiteIcon = new ImageIcon("assets/white.png");
-    public static ImageIcon yellowIcon = new ImageIcon("assets/yellow.png");
-    public static ImageIcon redIcon = new ImageIcon("assets/red.png");
-    public static ImageIcon orangeIcon = new ImageIcon("assets/orange.png");
-    public static ImageIcon pinkIcon = new ImageIcon("assets/pink.png");
+    public static ImageIcon whiteIcon = new ImageIcon("icons/white.png");
+    public static ImageIcon yellowIcon = new ImageIcon("icons/yellow.png");
+    public static ImageIcon redIcon = new ImageIcon("icons/red.png");
+    public static ImageIcon orangeIcon = new ImageIcon("icons/orange.png");
+    public static ImageIcon pinkIcon = new ImageIcon("icons/pink.png");
 
     JLabel [] labelArray= new JLabel[42];
     char [] gameArray = new char[42]; // the array will store the game state because its easier to compare chars and not labels
