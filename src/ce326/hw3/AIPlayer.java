@@ -24,7 +24,6 @@ public class AIPlayer {
     void makeMove(GamePanel gamePanel) {
 
 
-        System.out.println("new move");
         int position = 0, max = -Integer.MAX_VALUE, value;
         for (int i = 0; i < columns; i++) {
 
@@ -37,7 +36,6 @@ public class AIPlayer {
             moveArray[pos] = 'y';
 
             value = miniMax(moveArray, depth-1, false, -Integer.MAX_VALUE, Integer.MAX_VALUE);
-            System.out.println("Value: "+value+" pos: "+ i);
             if (value > max) {
                 position = i;
                 max = value;
@@ -45,8 +43,6 @@ public class AIPlayer {
         }
         
         gamePanel.placeLabel(position, "yellow", false); 
-
-        //evaluatePosition(gameArray);
     }
 
     /* Evaluates a position */

@@ -20,6 +20,7 @@ public class GameMenu {
     AIPlayer aiPlayer = null;
     JPanel mainPanel = null;
     JRadioButtonMenuItem ai = new JRadioButtonMenuItem("AI");
+    JMenu menuHistory = new JMenu("History");
 
     public GameMenu(JFrame currFrame, GamePanel gamePanel, AIPlayer aiPlayer, JPanel mainPanel, HistoryPanel historyPanel) {
         this.currFrame = currFrame; 
@@ -33,7 +34,6 @@ public class GameMenu {
         JMenuBar gameMenu = new JMenuBar();
         JMenu menuNewGame = new JMenu("New Game");
         JMenu menuPlayer = new JMenu("1st Player");
-        JMenu menuHistory = new JMenu("History");
         JMenu menuHelp = new JMenu("Help");
 
         gameMenu.add(menuNewGame);
@@ -91,13 +91,13 @@ public class GameMenu {
         menuHistory.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                cardLayout.next(mainPanel);
-                historyPanel.listFiles(mainPanel, gamePanel);
-                gamePanel.requestFocus();
+                if (mainPanel.getComponentCount() == 2) { //To ensure the player is not on the start screen
+                    cardLayout.next(mainPanel);
+                    historyPanel.listFiles(mainPanel, gamePanel);
+                    gamePanel.requestFocus();
+                }
             }
         });
-
-
 
         groupPlayer.add(you);
         groupPlayer.add(ai);

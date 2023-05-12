@@ -32,7 +32,7 @@ public class HistoryPanel extends JPanel {
 
         this.removeAll();
 
-        gameFolder = createFileDescriptor(System.getProperty("user.home")+ "/Connect4/");
+        gameFolder = createFileDescriptor(System.getProperty("user.home")+ "/connect4/");
 
         File [] loggedGames = gameFolder.listFiles(); 
 
@@ -48,7 +48,7 @@ public class HistoryPanel extends JPanel {
         Collections.sort(gamesList, Collections.reverseOrder());
 
         for(String curr: gamesList) {
-            String filePath = System.getProperty("user.home")+ "/Connect4/" + curr;
+            String filePath = System.getProperty("user.home")+ "/connect4/" + curr;
             File file = createFileDescriptor(filePath);
             String jsonString = readGameFile(file);
             String labelString = createHistoryLabel(jsonString);
@@ -131,7 +131,7 @@ public class HistoryPanel extends JPanel {
     public static void createHistoryDirectory() {
         File connect4 = null;
 
-        connect4 = createFileDescriptor(System.getProperty("user.home")+ "/Connect4");
+        connect4 = createFileDescriptor(System.getProperty("user.home")+ "/connect4");
 
         if (!connect4.exists()) {
             connect4.mkdir();
@@ -142,7 +142,7 @@ public class HistoryPanel extends JPanel {
     public static void logGame(GamePanel gamePanel, String displayString, List<Integer> moveList) {
         File gameFile = null;
         
-        gameFile = createFileDescriptor(System.getProperty("user.home")+ "/Connect4/" + gamePanel.gameStart + ".json");
+        gameFile = createFileDescriptor(System.getProperty("user.home")+ "/connect4/" + gamePanel.gameStart + ".json");
 
         try {
             gameFile.createNewFile();
