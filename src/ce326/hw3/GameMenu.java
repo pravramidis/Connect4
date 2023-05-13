@@ -123,7 +123,7 @@ public class GameMenu {
         }
 
         MouseListener [] mouseListener = gamePanel.labelArray[0].getMouseListeners();
-        if (mouseListener == null) {
+        if (mouseListener.length == 0) {
             gamePanel.addMouseListeners();
         }
 
