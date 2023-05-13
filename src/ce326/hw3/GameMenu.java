@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -110,11 +111,16 @@ public class GameMenu {
 
     /* Starts a new game */
     public void startGame(JRadioButtonMenuItem ai, DateTimeFormatter preferedFormat, CardLayout cardLayout) {
+        historyPanel.stopAllTimers();
         if (mainPanel.getComponentCount() != 2) {
             return;
         }
 
-        historyPanel.stopAllTimers();
+        MouseListener [] mouseListener = gamePanel.labelArray[0].getMouseListeners();
+        if (mouseListener == null) {
+            gamePanel.addMouseListeners();
+        }
+
         LocalDateTime currentDateTime = LocalDateTime.now();
         gamePanel.gameStart = currentDateTime.format(preferedFormat);
 

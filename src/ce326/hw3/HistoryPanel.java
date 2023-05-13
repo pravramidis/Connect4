@@ -247,7 +247,6 @@ public class HistoryPanel extends JPanel {
             }
         }
 
-        gamePanel.addMouseListeners();
     }
 
     /* Stops the timers in case the replay is interupted by the user staring a new game */
