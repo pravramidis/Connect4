@@ -23,6 +23,7 @@ public class AIPlayer {
     /* Calls the minimax algorithm for every child of the root node */
     void makeMove(GamePanel gamePanel) {
 
+        System.out.println("new move");
         int position = 0, max = -Integer.MAX_VALUE, value;
         for (int i = 0; i < columns; i++) {
 
@@ -35,6 +36,7 @@ public class AIPlayer {
             moveArray[pos] = 'y';
 
             value = miniMax(moveArray, depth-1, false, -Integer.MAX_VALUE, Integer.MAX_VALUE);
+            System.out.println("Value: "+ value+ " pos: "+i);
             if (value > max) {
                 position = i;
                 max = value;
@@ -145,7 +147,7 @@ public class AIPlayer {
                     return 16;
                 }
                 case 4: {
-                    return 10000;
+                    return 100000;
                 }
             }
         }
@@ -161,7 +163,7 @@ public class AIPlayer {
                     return -16;
                 }
                 case 4: {
-                    return -10000;
+                    return -100000;
                 }
             }
         }
@@ -173,11 +175,13 @@ public class AIPlayer {
     int miniMax(char [] gameArray, int depth, boolean maxPlayer, int alpha, int beta) {
         String winner = FindWinner.searchConnections(gameArray);
 
+        /* we subtrackt the depth to ensure that the quickest that the move chosen 
+        prevents the player from winning on the next move and that the ai will win the next move */
         if(winner != null && winner.equals("You won!")) {
-            return -10000;
+            return -100000 - depth;
         }
         if(winner != null && winner.equals("You lost!")) {
-            return 10000;
+            return 100000 - depth;
         }
         if (winner != null && winner.equals(("Draw!"))) {
             return 0;
