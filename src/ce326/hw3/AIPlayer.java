@@ -145,7 +145,7 @@ public class AIPlayer {
                     return 16;
                 }
                 case 4: {
-                    return 100000;
+                    return 10000;
                 }
             }
         }
@@ -161,7 +161,7 @@ public class AIPlayer {
                     return -16;
                 }
                 case 4: {
-                    return -100000;
+                    return -10000;
                 }
             }
         }
@@ -181,10 +181,10 @@ public class AIPlayer {
         /* we subtrackt the depth to ensure that the quickest that the move chosen 
         prevents the player from winning on the next move and that the ai will win the next move */
         if(winner != null && winner.equals("You won!")) {
-            return -100000 - depth;
+            return -10000 - depth*10;
         }
         if(winner != null && winner.equals("You lost!")) {
-            return 100000 - depth;
+            return 10000 + depth*10;
         }
         if (winner != null && winner.equals(("Draw!"))) {
             return 0;
