@@ -240,7 +240,9 @@ public class GamePanel extends JPanel {
 
         for (int i = 0; i < columns*lines; i++) {
             MouseListener [] mouseListener = labelArray[i].getMouseListeners();
-            labelArray[i].removeMouseListener(mouseListener[0]);
+            if (mouseListener.length != 0) {
+                labelArray[i].removeMouseListener(mouseListener[0]);
+            }
         }
     }
 

@@ -67,6 +67,7 @@ public class GameMenu {
 
         trivial.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Trivial";
                 aiPlayer.depth = 1;
                 startGame(ai, preferedFormat, cardLayout); 
@@ -75,6 +76,7 @@ public class GameMenu {
 
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Medium";
                 aiPlayer.depth = 3;
                 startGame(ai, preferedFormat, cardLayout);
@@ -83,6 +85,7 @@ public class GameMenu {
 
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                historyPanel.stopAllTimers();
                 gamePanel.Difficulty = "Hard";
                 aiPlayer.depth = 5;
                 startGame(ai, preferedFormat, cardLayout);
@@ -111,7 +114,6 @@ public class GameMenu {
 
     /* Starts a new game */
     public void startGame(JRadioButtonMenuItem ai, DateTimeFormatter preferedFormat, CardLayout cardLayout) {
-        historyPanel.stopAllTimers();
         if (mainPanel.getComponentCount() != 2) {
             return;
         }
