@@ -224,7 +224,6 @@ public class HistoryPanel extends JPanel {
         else {
             gamePanel.placeLabel(jsonArray.getInt(0), "red", true);
             color = "yellow";
-            color = "red";
         }
 
 
