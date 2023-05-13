@@ -16,3 +16,4 @@ Notes:
 Both right clicking and left clicking work as i saw no point in disabling the right click.
 Also note that if the ai can win anyway it may not choose the fastest path to victory.
 Sometimes it may taunt the user by allowing them to make extra moves knowing defeat is inevitable.
+Also if defeat is inevitable i will let the user win quickly.
