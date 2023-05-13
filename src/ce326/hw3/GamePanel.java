@@ -36,6 +36,7 @@ public class GamePanel extends JPanel {
     String Difficulty = "Trivial";
     String startingPlayer = "ai";
     List<Integer> moveList = new ArrayList<Integer>();
+    Timer placementTimer = null; // declared here so it can be reset after new game
 
     /* Creates the icons based on the pre-determined sizes */
     void createIcons() {
@@ -169,15 +170,15 @@ public class GamePanel extends JPanel {
             FindWinner.preventFurtherPlacements(gameArray);
         }
 
-        Timer timer = new Timer(1000, new ActionListener() {
+        placementTimer = new Timer(1000, new ActionListener() {
         public void actionPerformed(ActionEvent updateLabel) {
             labelArray[position].setIcon(inputIcon);
         }
         });
         
 
-        timer.setRepeats(false); 
-        timer.start();
+        placementTimer.setRepeats(false); 
+        placementTimer.start();
 
         if (isReplay) {
             return;

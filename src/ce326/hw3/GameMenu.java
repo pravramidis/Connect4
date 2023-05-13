@@ -118,6 +118,10 @@ public class GameMenu {
             return;
         }
 
+        if (gamePanel.placementTimer != null) { 
+            gamePanel.placementTimer.stop(); // stops the timer that changes from secondary color to primary color
+        }
+
         MouseListener [] mouseListener = gamePanel.labelArray[0].getMouseListeners();
         if (mouseListener == null) {
             gamePanel.addMouseListeners();
@@ -128,13 +132,14 @@ public class GameMenu {
 
         cardLayout.show(mainPanel, "game");
         gamePanel.requestFocus();
-        gamePanel.resetGrid();
         gamePanel.moveList.clear();
         if (ai.isSelected()) {
+            gamePanel.resetGrid(); // added here and below twice to ensure board i cleared rith before placement
             gamePanel.startingPlayer = "ai";
             gamePanel.placeLabel(3, "yellow", false);
         }
         else {
+            gamePanel.resetGrid();
             gamePanel.startingPlayer = "you";
         }
     }
