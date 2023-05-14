@@ -30,6 +30,8 @@ public class Connect4 {
         HistoryPanel.createHistoryDirectory();
 
         JFrame Connect4 = new JFrame();
+        Image whiteIcon = Toolkit.getDefaultToolkit().getImage("icons/taskBarIcon.png");
+        Connect4.setIconImage(whiteIcon);
         Connect4.setSize(WIDTH, HEIGHT);
         Connect4.setTitle("Connect4");
         Connect4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
