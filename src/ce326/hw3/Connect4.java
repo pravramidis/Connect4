@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 
 import java.awt.*;
+import java.io.File;
 
 /* The main class of the program */
 public class Connect4 {
@@ -30,7 +31,7 @@ public class Connect4 {
         HistoryPanel.createHistoryDirectory();
 
         JFrame Connect4 = new JFrame();
-        Image whiteIcon = Toolkit.getDefaultToolkit().getImage("icons/taskBarIcon.png");
+        Image whiteIcon = Toolkit.getDefaultToolkit().getImage("icons" + File.separator+ "taskBarIcon.png");
         Connect4.setIconImage(whiteIcon);
         Connect4.setSize(WIDTH, HEIGHT);
         Connect4.setTitle("Connect4");

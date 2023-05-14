@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,11 +22,11 @@ public class GamePanel extends JPanel {
     public static final int columns = 7;
     private static final int iconSize = 125;
 
-    public static ImageIcon whiteIcon = new ImageIcon("icons/white.png");
-    public static ImageIcon yellowIcon = new ImageIcon("icons/yellow.png");
-    public static ImageIcon redIcon = new ImageIcon("icons/red.png");
-    public static ImageIcon orangeIcon = new ImageIcon("icons/orange.png");
-    public static ImageIcon pinkIcon = new ImageIcon("icons/pink.png");
+    public static ImageIcon whiteIcon = new ImageIcon("icons" + File.separator+ "white.png");
+    public static ImageIcon yellowIcon = new ImageIcon("icons" + File.separator+ "yellow.png");
+    public static ImageIcon redIcon = new ImageIcon("icons" + File.separator+ "red.png");
+    public static ImageIcon orangeIcon = new ImageIcon("icons" + File.separator+ "orange.png");
+    public static ImageIcon pinkIcon = new ImageIcon("icons" + File.separator+ "pink.png");
 
     JLabel [] labelArray= new JLabel[42];
     char [] gameArray = new char[42]; // the array will store the game state because its easier to compare chars and not labels
